@@ -65,8 +65,11 @@ public final class Account {
 
         }
 
-        //Account'un bakiye bilgisini temsil eder. balance değerini ayarlar.
+        //Account'un bakiye bilgisini temsil eder. balance değerini ayarlar.Ve kontrol eder.
         public AccountBuilder balance(BigDecimal balance) {
+            if (balance.compareTo(BigDecimal.ZERO) < 0) {
+                throw new IllegalArgumentException("Balance cannot be negative");
+            }
             this.balance = balance;
             return this;
         }
