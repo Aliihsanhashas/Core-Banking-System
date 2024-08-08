@@ -1,6 +1,6 @@
-
-.gradle/
-
-.idea/
-
-build/
+/account-service/.gradle/
+/account-service/build/
+/loan-service/.gradle/
+/loan-service/build/
+/transaction-service/.gradle/
+/transaction-service/build/
