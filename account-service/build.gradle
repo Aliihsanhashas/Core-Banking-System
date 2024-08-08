@@ -30,3 +30,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Add the Gradle Wrapper configuration
+tasks.named('wrapper') {
+	gradleVersion = '8.9'
+	distributionType = Wrapper.DistributionType.ALL
+}

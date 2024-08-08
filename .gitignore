@@ -1,9 +1,6 @@
 /account-service/.gradle/
 /account-service/build/
-/account-service/gradle/
 /loan-service/.gradle/
 /loan-service/build/
-/loan-service/gradle/
 /transaction-service/.gradle/
 /transaction-service/build/
-/transaction-service/gradle/
