@@ -19,6 +19,7 @@ public final class AccountDTO {
 
     public AccountDTO(long id,String accountNumber, AccountType accountType, BigDecimal balance,
                       String accountHolderName, String accountHolderContact, boolean isClosed) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
