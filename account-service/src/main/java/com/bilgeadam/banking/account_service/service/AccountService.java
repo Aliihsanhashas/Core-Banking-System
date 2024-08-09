@@ -7,5 +7,5 @@ import com.bilgeadam.banking.account_service.entity.AccountEntity;
 import java.math.BigDecimal;
 
 public interface AccountService {
-
+    AccountDTO createAccount(AccountDTO accountDTO);
 }
