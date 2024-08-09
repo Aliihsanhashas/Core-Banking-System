@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4381f39b-ddc1-4998-940d-d62fd99a0ebb" name="Changes" comment="no task" />
+    <list default="true" id="4381f39b-ddc1-4998-940d-d62fd99a0ebb" name="Changes" comment="no task:update branch" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +46,6 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/com/bilgeadam/banking/account_service/AccountServiceApplication.java" root0="SKIP_INSPECTION" />
@@ -273,7 +272,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723182951551</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="no task:update branch">
+      <option name="closed" value="true" />
+      <created>1723185597844</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1723185597844</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -301,6 +308,7 @@
     <MESSAGE value="add method findBalanceByAccountNumber" />
     <MESSAGE value="delete gitignore" />
     <MESSAGE value="no task" />
-    <option name="LAST_COMMIT_MESSAGE" value="no task" />
+    <MESSAGE value="no task:update branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="no task:update branch" />
   </component>
 </project>
