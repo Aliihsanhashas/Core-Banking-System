@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "account")
 public class AccountEntity {
 
     @Id  //Primary key oldugunu belirtir veritabanında
