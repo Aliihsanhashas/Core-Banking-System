@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.math.BigDecimal;
 
 public final class AccountDTO {
+
+    private final long id;
     private final String accountNumber;
     private final AccountType accountType;
     private final BigDecimal balance;
@@ -15,14 +17,19 @@ public final class AccountDTO {
     private final String accountHolderContact;
     private final boolean isClosed;
 
-    public AccountDTO(String accountNumber, AccountType accountType, BigDecimal balance,
+    public AccountDTO(long id,String accountNumber, AccountType accountType, BigDecimal balance,
                       String accountHolderName, String accountHolderContact, boolean isClosed) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;
         this.accountHolderName = accountHolderName;
         this.accountHolderContact = accountHolderContact;
         this.isClosed = isClosed;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getAccountNumber() {
@@ -52,6 +59,7 @@ public final class AccountDTO {
     // Bu metod, bir Account domain nesnesini AccountDTO nesnesine dönüştürmek için kullanılır.
     public static AccountDTO fromDomain(Account account) {
         return new AccountDTO(
+                account.getId(),
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),
@@ -63,7 +71,7 @@ public final class AccountDTO {
 
     // Bu metod, bir AccountDTO nesnesini Account domain nesnesine dönüştürmek için kullanılır.
     public Account toDomain() {
-        return new Account.AccountBuilder(accountNumber, accountType, accountHolderName, accountHolderContact)
+        return new Account.AccountBuilder(id,accountNumber, accountType, accountHolderName, accountHolderContact)
                 .balance(balance)
                 .isClosed(isClosed)
                 .build();
