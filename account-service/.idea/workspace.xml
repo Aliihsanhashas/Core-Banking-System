@@ -48,20 +48,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Aliihsanhashas"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="24d19291-68dc-47b1-8e33-d6232f41aba9" />
-        <option name="url" value="https://github.com/Aliihsanhashas/Core-Banking-System.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/com/bilgeadam/banking/account_service/AccountServiceApplication.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/main/java/com/bilgeadam/banking/account_service/entity/AccountEntity.java" root0="FORCE_HIGHLIGHTING" />
@@ -108,7 +94,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected="Gradle.account-service [bootJar]">
+  <component name="RunManager" selected="Spring Boot.AccountServiceApplication">
     <configuration name="account-service [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
