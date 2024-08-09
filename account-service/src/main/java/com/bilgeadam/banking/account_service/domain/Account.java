@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public final class Account {
+
     private final String accountNumber;
     private final AccountType accountType;
     private final BigDecimal balance;
