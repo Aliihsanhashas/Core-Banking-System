@@ -6,73 +6,72 @@ import java.util.Objects;
 
 public final class Transaction {
 
-    private final String transactionId;
-
-    private final String sourceAccountNumber;
-
-    private final String destinationAccountNumber;
-
-    private final BigDecimal amount;
-
-    private final LocalDateTime timestamp;
-
+    private long id;
+    private final long accountId;
     private final TransactionType transactionType;
+    private final BigDecimal amount;
+    private final LocalDateTime transactionDate;
+    private final String description;
 
-
-
-    // Builder kullanılarak Transaction nesnesinin oluşturulması
     private Transaction(TransactionBuilder builder) {
-        this.transactionId = builder.transactionId;
-        this.sourceAccountNumber = builder.sourceAccountNumber;
-        this.destinationAccountNumber = builder.destinationAccountNumber;
-        this.amount = builder.amount;
-        this.timestamp = builder.timestamp;
+        this.accountId = builder.accountId;
         this.transactionType = builder.transactionType;
+        this.amount = builder.amount;
+        this.transactionDate = builder.transactionDate;
+        this.description = builder.description;
     }
 
-    public String getTransactionId() {
-        return transactionId;
+    public long getId() {
+        return id;
     }
 
-    public String getSourceAccountNumber() {
-        return sourceAccountNumber;
-    }
-
-    public String getDestinationAccountNumber() {
-        return destinationAccountNumber;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public long getAccountId() {
+        return accountId;
     }
 
     public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    // Transaction nesnesini oluşturmak için Builder sınıfı
-    public static class TransactionBuilder {
-        // Builder sınıfında kullanılacak tüm özellikler
-        private final String transactionId;
-        private final String sourceAccountNumber;
-        private final String destinationAccountNumber;
-        private final BigDecimal amount;
-        private final LocalDateTime timestamp;
-        private final TransactionType transactionType;
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-        // Builder'ın gerekli tüm parametrelerle başlatılması
-        public TransactionBuilder(String transactionId, String sourceAccountNumber, String destinationAccountNumber,
-                                  BigDecimal amount, LocalDateTime timestamp, TransactionType transactionType) {
-            this.transactionId = Objects.requireNonNull(transactionId, "Transaction ID must not be null");
-            this.sourceAccountNumber = Objects.requireNonNull(sourceAccountNumber, "Source account number must not be null");
-            this.destinationAccountNumber = Objects.requireNonNull(destinationAccountNumber, "Destination account number must not be null");
-            this.amount = Objects.requireNonNull(amount, "Amount must not be null");
-            this.timestamp = Objects.requireNonNull(timestamp, "Timestamp must not be null");
+    public LocalDateTime getTransactionDate() {
+        return transactionDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    // static class olmasının sebebi Transaction'dan bağımsız çalışabilsin.
+    // TransactionBuilder sınıfının sadece Transaction nesnesi oluşturmak tasarlanıp
+    // dış sınıfın iç yapısına erişim sağlamadan, etkilemeden çalışmasını sağlar.
+    public static class TransactionBuilder {
+
+        private final long accountId;
+        private final TransactionType transactionType;
+        private final BigDecimal amount;
+        private final LocalDateTime transactionDate;
+        private String description;
+
+        public TransactionBuilder(long accountId, TransactionType transactionType, BigDecimal amount,
+                                  LocalDateTime transactionDate, String description) {
+            this.accountId = accountId;
             this.transactionType = Objects.requireNonNull(transactionType, "Transaction type must not be null");
+            this.amount = Objects.requireNonNull(amount, "Amount must not be null");
+            this.transactionDate = Objects.requireNonNull(transactionDate, "Transaction date must not be null");
+            this.description = Objects.requireNonNull(description, "Description must not be null");
+        }
+
+        // Transaction'ın açıklamasını temsil eder. Description değerini ayarlar.
+        public TransactionBuilder description(String description) {
+            if (description.isBlank()) {
+                throw new IllegalArgumentException("Description cannot be blank");
+            }
+            this.description = description;
+            return this;
         }
 
         public Transaction build() {
