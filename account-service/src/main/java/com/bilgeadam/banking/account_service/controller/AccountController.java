@@ -4,10 +4,9 @@ import com.bilgeadam.banking.account_service.dto.AccountDTO;
 import com.bilgeadam.banking.account_service.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/account")
@@ -18,7 +17,8 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping    
+
+    @PostMapping
     public ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO accountDTO) {
         // DTO'dan domain nesnesine dönüşüm yaparak hesap oluştur
         AccountDTO createdAccount = accountService.createAccount(accountDTO);

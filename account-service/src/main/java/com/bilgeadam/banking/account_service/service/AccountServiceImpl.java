@@ -10,8 +10,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -19,13 +17,12 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository ,AccountMapper accountMapper) {
+    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
     }
 
     @Override
-    @Transactional
     public AccountDTO createAccount(AccountDTO accountDTO) {
         // DTO'yu Domain nesnesine dönüştür
         Account account = accountMapper.toDomain(accountDTO);

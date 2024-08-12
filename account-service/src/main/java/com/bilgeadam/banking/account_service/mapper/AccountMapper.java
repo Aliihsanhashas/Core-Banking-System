@@ -7,10 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountMapper {
-    // AccountDTO'yu AccountDomain nesnesine dönüştür
-    public Account toDomain(AccountDTO accountDTO) {
-        return new Account.AccountBuilder(
 
+    // AccountDTO'yu Account domain nesnesine dönüştür
+    public Account toDomain(AccountDTO accountDTO) {
+        if (accountDTO == null) {
+            return null;
+        }
+        return new Account.AccountBuilder(
                 accountDTO.getAccountNumber(),
                 accountDTO.getAccountType(),
                 accountDTO.getAccountHolderName(),
@@ -21,10 +24,12 @@ public class AccountMapper {
                 .build();
     }
 
-    // AccountDomain'i AccountDTO nesnesine dönüştür
+    // Account domain nesnesini AccountDTO'ya dönüştür
     public AccountDTO toDTO(Account account) {
+        if (account == null) {
+            return null;
+        }
         return new AccountDTO(
-
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),
@@ -34,10 +39,12 @@ public class AccountMapper {
         );
     }
 
-    // AccountEntity'yi AccountDomain nesnesine dönüştür
+    // AccountEntity'yi Account domain nesnesine dönüştür
     public Account toDomain(AccountEntity accountEntity) {
+        if (accountEntity == null) {
+            return null;
+        }
         return new Account.AccountBuilder(
-
                 accountEntity.getAccountNumber(),
                 accountEntity.getAccountType(),
                 accountEntity.getAccountHolderName(),
@@ -48,8 +55,11 @@ public class AccountMapper {
                 .build();
     }
 
-    // AccountDomain'i AccountEntity nesnesine dönüştür
+    // Account domain nesnesini AccountEntity'ye dönüştür
     public AccountEntity toEntity(Account account) {
+        if (account == null) {
+            return null;
+        }
         return new AccountEntity(
                 account.getAccountNumber(),
                 account.getAccountType(),
