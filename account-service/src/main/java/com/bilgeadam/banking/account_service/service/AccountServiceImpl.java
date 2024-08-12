@@ -25,6 +25,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public AccountDTO createAccount(AccountDTO accountDTO) {
         // DTO'yu Domain nesnesine dönüştür
         Account account = accountMapper.toDomain(accountDTO);

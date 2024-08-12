@@ -10,7 +10,7 @@ public class AccountMapper {
     // AccountDTO'yu AccountDomain nesnesine dönüştür
     public Account toDomain(AccountDTO accountDTO) {
         return new Account.AccountBuilder(
-                accountDTO.getId(),
+
                 accountDTO.getAccountNumber(),
                 accountDTO.getAccountType(),
                 accountDTO.getAccountHolderName(),
@@ -24,7 +24,7 @@ public class AccountMapper {
     // AccountDomain'i AccountDTO nesnesine dönüştür
     public AccountDTO toDTO(Account account) {
         return new AccountDTO(
-                account.getId(),
+
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),
@@ -37,7 +37,7 @@ public class AccountMapper {
     // AccountEntity'yi AccountDomain nesnesine dönüştür
     public Account toDomain(AccountEntity accountEntity) {
         return new Account.AccountBuilder(
-                accountEntity.getId(),
+
                 accountEntity.getAccountNumber(),
                 accountEntity.getAccountType(),
                 accountEntity.getAccountHolderName(),
