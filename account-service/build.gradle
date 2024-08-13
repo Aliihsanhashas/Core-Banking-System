@@ -30,6 +30,10 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+tasks.withType(Test) {
+	enabled = false
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

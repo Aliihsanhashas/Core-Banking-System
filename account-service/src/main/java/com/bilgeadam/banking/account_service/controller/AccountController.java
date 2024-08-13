@@ -17,6 +17,10 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello World!";
+    }
 
     @PostMapping
     public ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO accountDTO) {
