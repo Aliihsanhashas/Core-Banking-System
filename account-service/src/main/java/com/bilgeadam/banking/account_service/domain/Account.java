@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public final class Account {
 
-    private long id;
+    private Long id;
     private final String accountNumber;
     private final AccountType accountType;
     private final BigDecimal balance;
