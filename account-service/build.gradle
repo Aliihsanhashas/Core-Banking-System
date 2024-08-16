@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.2'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.flywaydb.flyway' version '9.1.1'
 }
 
 group = 'com.bilgeadam.banking'
@@ -9,7 +10,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(22)
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
@@ -28,14 +29,41 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation platform('org.testcontainers:testcontainers-bom:1.20.1') //import bom
+	testImplementation('org.testcontainers:postgresql') //no version specified
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy stopDockerCompose
 }
 
 // Add the Gradle Wrapper configuration
 tasks.named('wrapper') {
-	gradleVersion = '8.9'
+	gradleVersion = '7.5'
 	distributionType = Wrapper.DistributionType.ALL
+}
+
+task startPostgres(type: Exec) {
+	commandLine 'docker', 'compose', '-f', 'compose-test.yaml', 'up', '-d'
+}
+
+flyway {
+	url = 'jdbc:postgresql://localhost:5432/account'
+	user = 'test'
+	password = 'test'
+	locations = ['classpath:db/migration']
+}
+
+tasks.named('flywayMigrate') {
+	dependsOn startPostgres
+}
+
+task stopDockerCompose(type: Exec) {
+	dependsOn test
+	commandLine 'docker', 'compose', '-f', 'compose-test.yaml', 'down'
+}
+
+test {
+	dependsOn flywayMigrate
 }

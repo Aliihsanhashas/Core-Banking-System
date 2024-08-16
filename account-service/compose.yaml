@@ -8,7 +8,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/account
       - SPRING_DATASOURCE_USERNAME=test
       - SPRING_DATASOURCE_PASSWORD=test
-      - SPRING_FLYWAY_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_FLYWAY_URL=jdbc:postgresql://db:5432/account
       - SPRING_FLYWAY_USER=test
       - SPRING_FLYWAY_PASSWORD=test
     depends_on:
