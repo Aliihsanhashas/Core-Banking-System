@@ -13,6 +13,8 @@ services:
       - SPRING_FLYWAY_PASSWORD=test
     depends_on:
       - db
+      - initdb
+    restart: on-failure
   db:
     image: postgres
     environment:
@@ -21,3 +23,17 @@ services:
       - POSTGRES_PASSWORD=test
     ports:
       - "5432:5432"
+  initdb:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=test
+      - PGPASSWORD=test
+    command: >
+      sh -c "
+        psql -h db -U test postgres -c 'CREATE DATABASE account;' || true;
+        psql -h db -U test account -c 'SELECT 1;'
+      "
+    depends_on:
+      - db
+    restart: on-failure
