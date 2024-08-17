@@ -17,6 +17,7 @@ services:
     restart: on-failure
   db:
     image: postgres
+    container_name: postgres-container
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=test
@@ -31,8 +32,20 @@ services:
       - PGPASSWORD=test
     command: >
       sh -c "
-        psql -h db -U test postgres -c 'CREATE DATABASE account;' || true;
-        psql -h db -U test account -c 'SELECT 1;' && exit 0 || exit 1
+        echo 'Waiting for PostgreSQL to be ready...';
+        until psql -h db -U test -d postgres -c 'SELECT 1;' >/dev/null 2>&1; do
+          echo 'PostgreSQL is not ready yet. Waiting...';
+          sleep 2;
+        done;
+        echo 'PostgreSQL is ready. Attempting to create the database...';
+        psql -h db -U test -d postgres -c 'CREATE DATABASE account;' || true;
+        if psql -h db -U test -d account -c 'SELECT 1;' >/dev/null 2>&1; then
+          echo 'Database creation or verification successful.';
+          exit 0;
+        else
+          echo 'Database creation failed.';
+          exit 1;
+        fi
       "
     depends_on:
       - db

@@ -48,6 +48,11 @@ task startPostgres(type: Exec) {
 	commandLine 'docker', 'compose', '-f', 'compose-test.yaml', 'up', '-d'
 }
 
+task waitForPostgres(type: Exec) {
+	dependsOn startPostgres
+	commandLine 'sh', '-c', 'until docker exec postgres-container pg_isready -U test; do sleep 1; done'
+}
+
 flyway {
 	url = 'jdbc:postgresql://localhost:5432/account'
 	user = 'test'
@@ -55,8 +60,38 @@ flyway {
 	locations = ['classpath:db/migration']
 }
 
+// Flyway task with retry logic
+task retryFlywayMigrate {
+	dependsOn waitForPostgres
+	doLast {
+		def maxRetries = 5
+		def delay = 1 // seconds
+		def attempt = 1
+
+		while (attempt <= maxRetries) {
+			try {
+				println "Attempt $attempt to run Flyway migration..."
+				tasks.named('flywayMigrate').get().actions.each { action ->
+					action.execute(tasks.named('flywayMigrate').get())
+				}
+				println "Flyway migration succeeded on attempt $attempt"
+				break
+			} catch (Exception e) {
+				if (attempt == maxRetries) {
+					println "Flyway migration failed after $attempt attempts"
+					throw e
+				}
+				println "Flyway migration failed on attempt $attempt. Retrying in $delay seconds..."
+				sleep(delay * 1000) // Delay in milliseconds
+				attempt++
+			}
+		}
+	}
+}
+
+// Ensure flywayMigrate task is not directly run since we use retryable one
 tasks.named('flywayMigrate') {
-	dependsOn startPostgres
+	enabled = false
 }
 
 task stopDockerCompose(type: Exec) {
@@ -65,5 +100,5 @@ task stopDockerCompose(type: Exec) {
 }
 
 test {
-	dependsOn flywayMigrate
+	dependsOn retryFlywayMigrate
 }
