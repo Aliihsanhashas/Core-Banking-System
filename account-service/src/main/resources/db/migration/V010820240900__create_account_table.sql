@@ -1,4 +1,4 @@
-CREATE TYPE account_type AS ENUM ('savings', 'checking');
+CREATE TYPE account_type AS ENUM ('SAVINGS', 'CHECKING');
 
 CREATE TABLE account (
                          id BIGSERIAL PRIMARY KEY,
