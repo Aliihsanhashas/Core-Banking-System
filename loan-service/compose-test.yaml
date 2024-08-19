@@ -1,23 +1,7 @@
 services:
-  app:
-    build: .
-    ports:
-      - "8082:8082"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/loan
-      - SPRING_DATASOURCE_USERNAME=test
-      - SPRING_DATASOURCE_PASSWORD=test
-      - SPRING_FLYWAY_URL=jdbc:postgresql://db:5432/loan
-      - SPRING_FLYWAY_USER=test
-      - SPRING_FLYWAY_PASSWORD=test
-    depends_on:
-      - db
-      - initdb
-    restart: on-failure
   db:
     image: postgres
-    container_name: postgres-containerLoan
+    container_name: postgres-containerloan
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=test

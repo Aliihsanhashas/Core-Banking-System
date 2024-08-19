@@ -1,28 +1,91 @@
 package com.bilgeadam.banking.loan_service.domain;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.time.LocalDateTime;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public final class Loan {
 
-    private long id;
+    private final Long id;
     private final String loanNumber;
     private final BigDecimal amount;
-    private final BigDecimal interestRate;
-    private final String borrowerName;
-    private final String borrowerContact;
-    private final boolean isRepaid;
+    private final BigDecimal balance;
+    private final String accountHolderName;
+    private final LocalDateTime startDate;
+    private final LocalDateTime endDate;
+    private final LoanStatus status;
 
-    private Loan(LoanBuilder builder) {
+    private Loan(Builder builder) {
+        this.id = builder.id;
         this.loanNumber = builder.loanNumber;
         this.amount = builder.amount;
-        this.interestRate = builder.interestRate;
-        this.borrowerName = builder.borrowerName;
-        this.borrowerContact = builder.borrowerContact;
-        this.isRepaid = builder.isRepaid;
+        this.balance = builder.balance;
+        this.accountHolderName = builder.accountHolderName;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
+        this.status = builder.status;
     }
 
-    public long getId() {
+    public static class Builder {
+        private Long id;
+        private String loanNumber;
+        private BigDecimal amount;
+        private BigDecimal balance;
+        private String accountHolderName;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private LoanStatus status;
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withLoanNumber(String loanNumber) {
+            this.loanNumber = loanNumber;
+            return this;
+        }
+
+        public Builder withAmount(BigDecimal amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public Builder withBalance(BigDecimal balance) {
+            this.balance = balance;
+            return this;
+        }
+
+        public Builder withAccountHolderName(String accountHolderName) {
+            this.accountHolderName = accountHolderName;
+            return this;
+        }
+
+        public Builder withStartDate(LocalDateTime startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        public Builder withEndDate(LocalDateTime endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Builder withStatus(LoanStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Loan build() {
+            return new Loan(this);
+        }
+    }
+
+    // Getters for the fields
+
+    public Long getId() {
         return id;
     }
 
@@ -34,49 +97,23 @@ public final class Loan {
         return amount;
     }
 
-    public BigDecimal getInterestRate() {
-        return interestRate;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public String getBorrowerName() {
-        return borrowerName;
+    public String getAccountHolderName() {
+        return accountHolderName;
     }
 
-    public String getBorrowerContact() {
-        return borrowerContact;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public boolean isRepaid() {
-        return isRepaid;
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 
-    public static class LoanBuilder {
-
-        private final String loanNumber;
-        private final BigDecimal amount;
-        private final BigDecimal interestRate;
-        private final String borrowerName;
-        private final String borrowerContact;
-        private boolean isRepaid = false; // default value.
-
-        public LoanBuilder(String loanNumber, BigDecimal amount, BigDecimal interestRate,
-                           String borrowerName, String borrowerContact) {
-            this.loanNumber = Objects.requireNonNull(loanNumber, "Loan number must not be null");
-            this.amount = Objects.requireNonNull(amount, "Amount must not be null");
-            this.interestRate = Objects.requireNonNull(interestRate, "Interest rate must not be null");
-            this.borrowerName = Objects.requireNonNull(borrowerName, "Borrower name must not be null");
-            this.borrowerContact = Objects.requireNonNull(borrowerContact, "Borrower contact must not be null");
-        }
-
-        public LoanBuilder isRepaid(boolean isRepaid) {
-            this.isRepaid = isRepaid;
-            return this;
-        }
-
-        public Loan build() {
-            return new Loan(this);
-        }
+    public LoanStatus getStatus() {
+        return status;
     }
 }
-
-

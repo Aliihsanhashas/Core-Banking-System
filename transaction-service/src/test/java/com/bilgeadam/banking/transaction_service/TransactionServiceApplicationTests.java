@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class TransactionServiceApplicationTests {
 
 	@Test
-	private void contextLoads() {
+	void contextLoads() {
 	}
 
 }

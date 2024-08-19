@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2a5fa347-3b30-4937-9a07-e133e647ff1d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/controller/LoanController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/domain/Loan.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/domain/LoanType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/dto/LoanDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/entity/LoanEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/repository/LoanRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/service/LoanService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/controller/TransactionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/dto/TransactionDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/entity/TransactionEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/repository/TransactionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/service/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/loan-service/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/loan-service/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction-service/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/transaction-service/compose.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2kN6qMxCbo6Dj65s53d5Ty1c1xv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "baris02",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/baris/IdeaProjects/Core-Banking-System/transaction-service",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2a5fa347-3b30-4937-9a07-e133e647ff1d" name="Changes" comment="" />
+      <created>1723111876835</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723111876835</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="baris02" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

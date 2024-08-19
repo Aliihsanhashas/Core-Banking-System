@@ -6,27 +6,30 @@ import java.util.Objects;
 
 public final class Transaction {
 
-    private long id;
-    private final long accountId;
+    private final long id;
+    private final String transactionNumber;
     private final TransactionType transactionType;
     private final BigDecimal amount;
+    private final String fromAccount;
+    private final String toAccount;
     private final LocalDateTime transactionDate;
-    private final String description;
 
     private Transaction(TransactionBuilder builder) {
-        this.accountId = builder.accountId;
+        this.id = builder.id;
+        this.transactionNumber = builder.transactionNumber;
         this.transactionType = builder.transactionType;
         this.amount = builder.amount;
+        this.fromAccount = builder.fromAccount;
+        this.toAccount = builder.toAccount;
         this.transactionDate = builder.transactionDate;
-        this.description = builder.description;
     }
 
     public long getId() {
         return id;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public String getTransactionNumber() {
+        return transactionNumber;
     }
 
     public TransactionType getTransactionType() {
@@ -37,40 +40,46 @@ public final class Transaction {
         return amount;
     }
 
+    public String getFromAccount() {
+        return fromAccount;
+    }
+
+    public String getToAccount() {
+        return toAccount;
+    }
+
     public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    // static class olmasının sebebi Transaction'dan bağımsız çalışabilsin.
-    // TransactionBuilder sınıfının sadece Transaction nesnesi oluşturmak tasarlanıp
-    // dış sınıfın iç yapısına erişim sağlamadan, etkilemeden çalışmasını sağlar.
     public static class TransactionBuilder {
-
-        private final long accountId;
+        private final long id;
+        private final String transactionNumber;
         private final TransactionType transactionType;
         private final BigDecimal amount;
-        private final LocalDateTime transactionDate;
-        private String description;
+        private String fromAccount;
+        private String toAccount;
+        private LocalDateTime transactionDate = LocalDateTime.now();
 
-        public TransactionBuilder(long accountId, TransactionType transactionType, BigDecimal amount,
-                                  LocalDateTime transactionDate, String description) {
-            this.accountId = accountId;
+        public TransactionBuilder(long id, String transactionNumber, TransactionType transactionType, BigDecimal amount) {
+            this.id = id;
+            this.transactionNumber = Objects.requireNonNull(transactionNumber, "Transaction number must not be null");
             this.transactionType = Objects.requireNonNull(transactionType, "Transaction type must not be null");
             this.amount = Objects.requireNonNull(amount, "Amount must not be null");
-            this.transactionDate = Objects.requireNonNull(transactionDate, "Transaction date must not be null");
-            this.description = Objects.requireNonNull(description, "Description must not be null");
         }
 
-        // Transaction'ın açıklamasını temsil eder. Description değerini ayarlar.
-        public TransactionBuilder description(String description) {
-            if (description.isBlank()) {
-                throw new IllegalArgumentException("Description cannot be blank");
-            }
-            this.description = description;
+        public TransactionBuilder fromAccount(String fromAccount) {
+            this.fromAccount = Objects.requireNonNull(fromAccount, "From account must not be null");
+            return this;
+        }
+
+        public TransactionBuilder toAccount(String toAccount) {
+            this.toAccount = Objects.requireNonNull(toAccount, "To account must not be null");
+            return this;
+        }
+
+        public TransactionBuilder transactionDate(LocalDateTime transactionDate) {
+            this.transactionDate = Objects.requireNonNull(transactionDate, "Transaction date must not be null");
             return this;
         }
 

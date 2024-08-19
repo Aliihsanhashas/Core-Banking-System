@@ -1,53 +1,64 @@
 package com.bilgeadam.banking.loan_service.entity;
 
+import com.bilgeadam.banking.loan_service.domain.LoanStatus;
 import jakarta.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name = "loan")
 public class LoanEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id  //Primary key olarak belirtilir
+    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Veritabanı için benzersiz bir id değeri atar
     private Long id;
 
     @Column(name = "loan_number", nullable = false, unique = true)
-
+    @NotBlank
     private String loanNumber;
 
     @Column(name = "amount", nullable = false)
-
+    @NotNull
     private BigDecimal amount;
 
-    @Column(name = "interest_rate", nullable = false)
+    @Column(name = "balance", nullable = false)
+    @NotNull
+    private BigDecimal balance;
 
-    private BigDecimal interestRate;
+    @Column(name = "account_holder_name", nullable = false)
+    @NotBlank
+    private String accountHolderName;
 
-    @Column(name = "borrower_name", nullable = false)
+    @Column(name = "start_date", nullable = false)
+    @NotNull
+    private LocalDateTime startDate;
 
-    private String borrowerName;
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
 
-    @Column(name = "borrower_contact", nullable = false)
-
-    private String borrowerContact;
-
-    @Column(name = "is_repaid", nullable = false)
-    private boolean isRepaid;
+    @Enumerated(EnumType.STRING) // Enum değerlerinin veritabanında string olarak saklanmasını sağlar
+    @Column(name = "status", nullable = false)
+    @NotNull
+    private LoanStatus status;
 
     protected LoanEntity() {
     }
 
-    public LoanEntity(String loanNumber, BigDecimal amount, BigDecimal interestRate,
-                      String borrowerName, String borrowerContact, boolean isRepaid) {
+    public LoanEntity(String loanNumber, BigDecimal amount, BigDecimal balance, String accountHolderName,
+                      LocalDateTime startDate, LocalDateTime endDate, LoanStatus status) {
         this.loanNumber = loanNumber;
         this.amount = amount;
-        this.interestRate = interestRate;
-        this.borrowerName = borrowerName;
-        this.borrowerContact = borrowerContact;
-        this.isRepaid = isRepaid;
+        this.balance = balance;
+        this.accountHolderName = accountHolderName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
     }
 
     public Long getId() {
@@ -62,20 +73,24 @@ public class LoanEntity {
         return amount;
     }
 
-    public BigDecimal getInterestRate() {
-        return interestRate;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public String getBorrowerName() {
-        return borrowerName;
+    public String getAccountHolderName() {
+        return accountHolderName;
     }
 
-    public String getBorrowerContact() {
-        return borrowerContact;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public boolean isRepaid() {
-        return isRepaid;
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+
+    public LoanStatus getStatus() {
+        return status;
     }
 
     @Override
@@ -83,18 +98,19 @@ public class LoanEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LoanEntity that = (LoanEntity) o;
-        return isRepaid == that.isRepaid &&
-                Objects.equals(id, that.id) &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(loanNumber, that.loanNumber) &&
                 Objects.equals(amount, that.amount) &&
-                Objects.equals(interestRate, that.interestRate) &&
-                Objects.equals(borrowerName, that.borrowerName) &&
-                Objects.equals(borrowerContact, that.borrowerContact);
+                Objects.equals(balance, that.balance) &&
+                Objects.equals(accountHolderName, that.accountHolderName) &&
+                Objects.equals(startDate, that.startDate) &&
+                Objects.equals(endDate, that.endDate) &&
+                status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, loanNumber, amount, interestRate, borrowerName, borrowerContact, isRepaid);
+        return Objects.hash(id, loanNumber, amount, balance, accountHolderName, startDate, endDate, status);
     }
 
     @Override
@@ -103,10 +119,11 @@ public class LoanEntity {
                 "id=" + id +
                 ", loanNumber='" + loanNumber + '\'' +
                 ", amount=" + amount +
-                ", interestRate=" + interestRate +
-                ", borrowerName='" + borrowerName + '\'' +
-                ", borrowerContact='" + borrowerContact + '\'' +
-                ", isRepaid=" + isRepaid +
+                ", balance=" + balance +
+                ", accountHolderName='" + accountHolderName + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status=" + status +
                 '}';
     }
 }
