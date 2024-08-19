@@ -39,7 +39,7 @@ services:
         done;
         echo 'PostgreSQL is ready. Attempting to create the database...';
         psql -h db -U test -d postgres -c 'CREATE DATABASE loan;' || true;
-        if psql -h db -U test -d account -c 'SELECT 1;' >/dev/null 2>&1; then
+        if psql -h db -U test -d loan -c 'SELECT 1;' >/dev/null 2>&1; then
           echo 'Database creation or verification successful.';
           exit 0;
         else
