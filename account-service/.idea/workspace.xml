@@ -5,24 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4381f39b-ddc1-4998-940d-d62fd99a0ebb" name="Changes" comment="add mapper package , service class , getAllAccount method,createAccount method">
-      <change afterPath="$PROJECT_DIR$/../loan-service/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../loan-service/src/main/java/com/bilgeadam/banking/loan_service/domain/Loan.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../loan-service/src/main/java/com/bilgeadam/banking/loan_service/domain/LoanStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../loan-service/src/main/java/com/bilgeadam/banking/loan_service/entity/LoanEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/8.9/checksums/checksums.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/8.9/dependencies-accessors/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/compose-test.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/8.9/executionHistory/executionHistory.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/8.9/fileChanges/last-build.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/8.9/fileHashes/fileHashes.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/8.9/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/src/main/resources/db.migration/V010820240900__create_loan_table.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/.gradle/vcs-1/gc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/src/test/resources/application-test.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../loan-service/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../loan-service/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../loan-service/compose-test.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/compose-test.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../loan-service/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../loan-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../loan-service/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../loan-service/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

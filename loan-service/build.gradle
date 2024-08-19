@@ -54,7 +54,7 @@ task waitForPostgres(type: Exec) {
 }
 
 flyway {
-	url = 'jdbc:postgresql://localhost:5432/account'
+	url = 'jdbc:postgresql://localhost:5432/loan'
 	user = 'test'
 	password = 'test'
 	locations = ['classpath:db/migration']

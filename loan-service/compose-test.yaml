@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres
-    container_name: postgres-container
+    container_name: postgres-containerloan
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=test
