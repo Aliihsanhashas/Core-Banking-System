@@ -1,5 +1,6 @@
 package com.bilgeadam.banking.account_service.service;
 
+import com.bilgeadam.banking.account_service.exception.AccountNotFoundException;
 import com.bilgeadam.banking.account_service.domain.Account;
 import com.bilgeadam.banking.account_service.dto.AccountDTO;
 import com.bilgeadam.banking.account_service.entity.AccountEntity;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +45,19 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public AccountDTO getAccountByNumber(String accountNumber) {
+        Optional<AccountEntity> accountEntityOptional = accountRepository.findByAccountNumber(accountNumber);
+
+        if (accountEntityOptional.isPresent()) {
+            AccountEntity accountEntity = accountEntityOptional.get();
+            Account account = accountMapper.toDomain(accountEntity);
+            return accountMapper.toDTO(account);
+        } else {
+            throw new AccountNotFoundException("Account with number " + accountNumber + " not found");
+        }
+    }
+
+    @Override
     public AccountDTO createAccount(AccountDTO accountDTO) {
         // DTO'yu Domain nesnesine dönüştür
         Account account = accountMapper.toDomain(accountDTO);
@@ -59,4 +74,6 @@ public class AccountServiceImpl implements AccountService {
         // Domain nesnesini DTO'ya dönüştür ve geri döndür
         return accountMapper.toDTO(savedAccount);
     }
+
+
 }
