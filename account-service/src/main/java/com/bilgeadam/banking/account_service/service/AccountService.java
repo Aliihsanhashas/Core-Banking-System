@@ -13,8 +13,4 @@ public interface AccountService {
 
     //DB ye veri ekleme.
     AccountDTO createAccount(AccountDTO accountDTO);
-
-
-
-
 }

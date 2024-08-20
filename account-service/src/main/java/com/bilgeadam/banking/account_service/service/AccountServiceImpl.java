@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,6 +60,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO createAccount(AccountDTO accountDTO) {
+
+        if (accountDTO.getBalance().compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative");
+        }
+
         // DTO'yu Domain nesnesine dönüştür
         Account account = accountMapper.toDomain(accountDTO);
 
