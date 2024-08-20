@@ -21,11 +21,14 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+    private final AccountNumberGeneratorService accountNumberGeneratorService;
 
     @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
+    public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper
+                              ,AccountNumberGeneratorService accountNumberGeneratorService) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
+        this.accountNumberGeneratorService = accountNumberGeneratorService;
     }
 
     @Override
@@ -60,24 +63,29 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO createAccount(AccountDTO accountDTO) {
+        // 1. Hesap numarasını oluştur
+        String accountNumber = accountNumberGeneratorService.generateAccountNumber();
 
-        if (accountDTO.getBalance().compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Balance cannot be negative");
-        }
-
-        // DTO'yu Domain nesnesine dönüştür
+        // 2. DTO'dan Domain nesnesini oluştur
         Account account = accountMapper.toDomain(accountDTO);
 
-        // Domain nesnesini Entity nesnesine dönüştür
-        AccountEntity accountEntity = accountMapper.toEntity(account);
+        // 3. Domain nesnesini Entity nesnesine dönüştür
+        AccountEntity accountEntity = new AccountEntity(
+                accountNumber,
+                account.getAccountType(),
+                account.getBalance(),
+                account.getAccountHolderName(),
+                account.getAccountHolderContact(),
+                account.isClosed()
+        );
 
-        // Entity nesnesini veritabanına kaydet
+        // 4. Entity nesnesini veritabanına kaydet
         AccountEntity savedAccountEntity = accountRepository.save(accountEntity);
 
-        // Kaydedilen Entity nesnesini Domain nesnesine dönüştür
+        // 5. Kaydedilen Entity nesnesini Domain nesnesine dönüştür
         Account savedAccount = accountMapper.toDomain(savedAccountEntity);
 
-        // Domain nesnesini DTO'ya dönüştür ve geri döndür
+        // 6. Domain nesnesini DTO'ya dönüştür ve geri döndür
         return accountMapper.toDTO(savedAccount);
     }
 
