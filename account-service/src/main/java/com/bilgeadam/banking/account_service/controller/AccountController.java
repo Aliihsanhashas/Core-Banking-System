@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,12 @@ public class AccountController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/{accountNumber}/balance")
+    public ResponseEntity<BigDecimal> getBalancebyAccountNumber(@PathVariable String accountNumber) {
+        BigDecimal balance = accountService.getBalance(accountNumber);
+        return ResponseEntity.ok(balance);
+    }
+
 
 
     @PostMapping("/save")
@@ -49,9 +56,7 @@ public class AccountController {
     @PutMapping("/{accountNumber}")
     public ResponseEntity<AccountDTO> updateAccount(@PathVariable String accountNumber,
                                                     @RequestBody AccountDTO accountDTO) {
-
         AccountDTO updatedAccount = accountService.updateAccount(accountNumber, accountDTO);
-
         return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
     }
 

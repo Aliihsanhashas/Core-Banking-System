@@ -25,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     public AccountServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper
-                              ,AccountNumberGeneratorService accountNumberGeneratorService) {
+            , AccountNumberGeneratorService accountNumberGeneratorService) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.accountNumberGeneratorService = accountNumberGeneratorService;
@@ -95,15 +95,12 @@ public class AccountServiceImpl implements AccountService {
         // 1. Mevcut hesabı bul
         AccountEntity existingAccountEntity = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException("Account with number " + accountNumber + " not found"));
-
         // 2. Hesabın kapalı olup olmadığını kontrol et
         if (existingAccountEntity.isClosed()) {
             throw new IllegalStateException("Account is closed and cannot be updated.");
         }
-
         // 3. DTO'dan domain nesnesini oluştur
         Account updatedAccount = accountMapper.toDomain(accountDTO);
-
         // 4. Mevcut ID ve immutable alanlar korunarak yeni bir AccountEntity oluştur
         AccountEntity updatedAccountEntity = new AccountEntity(
                 existingAccountEntity.getId(), // Koruduk
@@ -114,11 +111,9 @@ public class AccountServiceImpl implements AccountService {
                 updatedAccount.getAccountHolderContact(), // Güncellenmiş hesap sahibi iletişimi
                 existingAccountEntity.isClosed() // Koruduk
         );
-
         // 5. Güncellenmiş entity'yi kaydedin
         AccountEntity savedAccountEntity = accountRepository.save(updatedAccountEntity);
         Account savedAccount = accountMapper.toDomain(savedAccountEntity);
-
         return accountMapper.toDTO(savedAccount);
     }
 
@@ -151,6 +146,15 @@ public class AccountServiceImpl implements AccountService {
         Account savedAccount = accountMapper.toDomain(savedAccountEntity);
 
         return accountMapper.toDTO(savedAccount);
+    }
+
+    @Override
+    public BigDecimal getBalance(String accountNumber) {
+        AccountEntity accountEntity = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new AccountNotFoundException("Account with number " + accountNumber + " not found"));
+        Account account = accountMapper.toDomain(accountEntity);
+        BigDecimal balance = account.getBalance();
+        return balance;
     }
 
 

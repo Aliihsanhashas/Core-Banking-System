@@ -17,8 +17,6 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
     Optional<AccountEntity> findByAccountNumber(String accountNumber);
 
 
-    // Hesap numarasına göre bakiye (balance) sorgulamak için metod
-    BigDecimal findBalanceByAccountNumber(String accountNumber);
 
 
 
