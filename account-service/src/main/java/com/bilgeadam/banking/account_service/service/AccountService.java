@@ -12,8 +12,8 @@ public interface AccountService {
 
     AccountDTO createAccount(AccountDTO accountDTO);
 
-    AccountDTO updateAccount(AccountDTO accountDTO);
+    AccountDTO updateAccount(String accountNumber, AccountDTO accountDTO);
 
-    AccountDTO closeAccount(AccountDTO accountDTO);
+    AccountDTO closeAccount(String accountNumber);
 
 }

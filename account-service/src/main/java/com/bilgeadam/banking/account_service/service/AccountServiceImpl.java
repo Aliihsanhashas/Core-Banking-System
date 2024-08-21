@@ -90,12 +90,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO updateAccount(AccountDTO accountDTO) {
+    public AccountDTO updateAccount(String accountNumber, AccountDTO accountDTO) {
+
+
+
         return null;
     }
 
     @Override
-    public AccountDTO closeAccount(AccountDTO accountDTO) {
+    public AccountDTO closeAccount(String accountNumber) {
         return null;
     }
 
