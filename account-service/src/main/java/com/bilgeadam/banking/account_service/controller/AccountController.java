@@ -25,7 +25,7 @@ public class AccountController {
     }
 
     @GetMapping("/account/{accountNumber}")
-    public ResponseEntity<AccountDTO> getAccountByNumber(@PathVariable String accountNumber){
+    public ResponseEntity<AccountDTO> getAccountByNumber(@PathVariable String accountNumber) {
         try {
             AccountDTO accountDTO = accountService.getAccountByNumber(accountNumber);
             return ResponseEntity.ok(accountDTO);
@@ -45,5 +45,15 @@ public class AccountController {
         return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
 
     }
+
+    @PutMapping("/{accountNumber}")
+    public ResponseEntity<AccountDTO> updateAccount(@PathVariable String accountNumber,
+                                                    @RequestBody AccountDTO accountDTO) {
+
+        AccountDTO updatedAccount = accountService.updateAccount(accountNumber, accountDTO);
+
+        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+    }
+
 
 }

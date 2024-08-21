@@ -13,9 +13,8 @@ import java.util.Objects;
 @Table(name = "account")
 public class AccountEntity {
 
-    @Id  //Primary key oldugunu belirtir veritabanında
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // veritabanı için benzersiz bir id değeri atar.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // PostgreSQL'in otomatik ID atamasını sağlar.
     private Long id;
 
     @Column(name = "account_number", nullable = false, unique = true)
@@ -45,8 +44,9 @@ public class AccountEntity {
     protected AccountEntity() {
     }
 
-    public AccountEntity(String accountNumber, AccountType accountType, BigDecimal balance,
+    public AccountEntity(Long id ,String accountNumber, AccountType accountType, BigDecimal balance,
                          String accountHolderName, String accountHolderContact, boolean isClosed) {
+        this.id = id;
         this.accountNumber = accountNumber;
         this.accountType = accountType;
         this.balance = balance;

@@ -61,6 +61,7 @@ public class AccountMapper {
             return null;
         }
         return new AccountEntity(
+                account.getId(),
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),

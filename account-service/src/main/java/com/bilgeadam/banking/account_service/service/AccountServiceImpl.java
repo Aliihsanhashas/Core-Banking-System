@@ -71,6 +71,7 @@ public class AccountServiceImpl implements AccountService {
 
         // 3. Domain nesnesini Entity nesnesine dönüştür
         AccountEntity accountEntity = new AccountEntity(
+                account.getId(),
                 accountNumber,
                 account.getAccountType(),
                 account.getBalance(),
@@ -91,10 +92,28 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO updateAccount(String accountNumber, AccountDTO accountDTO) {
+        AccountEntity existingAccountEntity = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new AccountNotFoundException("Account with number " + accountNumber + " not found"));
 
+        // DTO'dan domain nesnesini oluştur
+        Account updatedAccount = accountMapper.toDomain(accountDTO);
 
+        // Mevcut ID ve immutable alanlar korunarak yeni bir AccountEntity oluştur
+        AccountEntity updatedAccountEntity = new AccountEntity(
+                existingAccountEntity.getId(), // Koruduk
+                existingAccountEntity.getAccountNumber(), // Koruduk
+                existingAccountEntity.getAccountType(), // Hesap türünü koruyun
+                updatedAccount.getBalance(), // Güncellenmiş bakiye
+                updatedAccount.getAccountHolderName(), // Güncellenmiş hesap sahibi adı
+                updatedAccount.getAccountHolderContact(), // Güncellenmiş hesap sahibi iletişimi
+                existingAccountEntity.isClosed() //Koruduk
+        );
 
-        return null;
+        // Güncellenmiş entity'yi kaydedin
+        AccountEntity savedAccountEntity = accountRepository.save(updatedAccountEntity);
+        Account savedAccount = accountMapper.toDomain(savedAccountEntity);
+
+        return accountMapper.toDTO(savedAccount);
     }
 
     @Override
