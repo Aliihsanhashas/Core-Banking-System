@@ -92,24 +92,30 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO updateAccount(String accountNumber, AccountDTO accountDTO) {
+        // 1. Mevcut hesabı bul
         AccountEntity existingAccountEntity = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new AccountNotFoundException("Account with number " + accountNumber + " not found"));
 
-        // DTO'dan domain nesnesini oluştur
+        // 2. Hesabın kapalı olup olmadığını kontrol et
+        if (existingAccountEntity.isClosed()) {
+            throw new IllegalStateException("Account is closed and cannot be updated.");
+        }
+
+        // 3. DTO'dan domain nesnesini oluştur
         Account updatedAccount = accountMapper.toDomain(accountDTO);
 
-        // Mevcut ID ve immutable alanlar korunarak yeni bir AccountEntity oluştur
+        // 4. Mevcut ID ve immutable alanlar korunarak yeni bir AccountEntity oluştur
         AccountEntity updatedAccountEntity = new AccountEntity(
                 existingAccountEntity.getId(), // Koruduk
                 existingAccountEntity.getAccountNumber(), // Koruduk
-                existingAccountEntity.getAccountType(), // Hesap türünü koruyun
+                existingAccountEntity.getAccountType(), // Koruduk
                 updatedAccount.getBalance(), // Güncellenmiş bakiye
                 updatedAccount.getAccountHolderName(), // Güncellenmiş hesap sahibi adı
                 updatedAccount.getAccountHolderContact(), // Güncellenmiş hesap sahibi iletişimi
-                existingAccountEntity.isClosed() //Koruduk
+                existingAccountEntity.isClosed() // Koruduk
         );
 
-        // Güncellenmiş entity'yi kaydedin
+        // 5. Güncellenmiş entity'yi kaydedin
         AccountEntity savedAccountEntity = accountRepository.save(updatedAccountEntity);
         Account savedAccount = accountMapper.toDomain(savedAccountEntity);
 
@@ -118,7 +124,33 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO closeAccount(String accountNumber) {
-        return null;
+        // 1. Mevcut hesabı bul
+        AccountEntity existingAccountEntity = accountRepository.findByAccountNumber(accountNumber)
+                .orElseThrow(() -> new AccountNotFoundException("Account with number " + accountNumber + " not found"));
+
+        // 2. Bakiyeyi kontrol et
+        if (existingAccountEntity.getBalance().compareTo(BigDecimal.ZERO) != 0) {
+            throw new IllegalStateException("Account cannot be closed because it has a non-zero balance.");
+        }
+
+        // 3. Mevcut hesabın kapalı olarak işaretlendiği yeni bir AccountEntity oluştur
+        AccountEntity closedAccountEntity = new AccountEntity(
+                existingAccountEntity.getId(), // ID korunur
+                existingAccountEntity.getAccountNumber(), // Hesap numarası korunur
+                existingAccountEntity.getAccountType(), // Hesap türü korunur
+                existingAccountEntity.getBalance(), // Mevcut bakiye korunur
+                existingAccountEntity.getAccountHolderName(), // Hesap sahibi adı korunur
+                existingAccountEntity.getAccountHolderContact(), // Hesap sahibi iletişimi korunur
+                true // Hesap kapalı olarak işaretlenir
+        );
+
+        // 4. Güncellenmiş entity'yi kaydedin
+        AccountEntity savedAccountEntity = accountRepository.save(closedAccountEntity);
+
+        // 5. Kaydedilen entity'yi domain nesnesine ve DTO'ya dönüştürün
+        Account savedAccount = accountMapper.toDomain(savedAccountEntity);
+
+        return accountMapper.toDTO(savedAccount);
     }
 
 

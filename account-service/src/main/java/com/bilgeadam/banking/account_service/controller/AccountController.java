@@ -55,5 +55,14 @@ public class AccountController {
         return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
     }
 
+    @PutMapping("/{accountNumber}/close")
+    public ResponseEntity<AccountDTO> closeAccount(@PathVariable String accountNumber) {
+        AccountDTO closeAccount = accountService.closeAccount(accountNumber);
+        return new ResponseEntity<>(closeAccount,HttpStatus.OK);
+    }
+
+
+
+
 
 }
