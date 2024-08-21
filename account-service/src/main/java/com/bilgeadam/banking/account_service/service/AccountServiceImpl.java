@@ -89,5 +89,15 @@ public class AccountServiceImpl implements AccountService {
         return accountMapper.toDTO(savedAccount);
     }
 
+    @Override
+    public AccountDTO updateAccount(AccountDTO accountDTO) {
+        return null;
+    }
+
+    @Override
+    public AccountDTO closeAccount(AccountDTO accountDTO) {
+        return null;
+    }
+
 
 }

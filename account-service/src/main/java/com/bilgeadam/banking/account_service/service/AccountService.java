@@ -6,11 +6,14 @@ import java.util.List;
 
 public interface AccountService {
 
-    //Tüm hesapları DB den çeker.
     List<AccountDTO> getAllAccounts();
 
     AccountDTO getAccountByNumber(String accountNumber);
 
-    //DB ye veri ekleme.
     AccountDTO createAccount(AccountDTO accountDTO);
+
+    AccountDTO updateAccount(AccountDTO accountDTO);
+
+    AccountDTO closeAccount(AccountDTO accountDTO);
+
 }
