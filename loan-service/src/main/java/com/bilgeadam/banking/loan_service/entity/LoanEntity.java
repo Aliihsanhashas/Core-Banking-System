@@ -2,129 +2,136 @@ package com.bilgeadam.banking.loan_service.entity;
 
 import com.bilgeadam.banking.loan_service.domain.LoanStatus;
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+
 @Entity
 @Table(name = "loan")
 public class LoanEntity {
 
-    @Id  //Primary key olarak belirtilir
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Veritabanı için benzersiz bir id değeri atar
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "loan_number", nullable = false, unique = true)
-    @NotBlank
-    private String loanNumber;
+    @Column(name = "account_number", nullable = false)
+    private final String accountNumber;
 
-    @Column(name = "amount", nullable = false)
-    @NotNull
-    private BigDecimal amount;
+    @Column(name = "loan_amount", nullable = false)
+    private final BigDecimal loanAmount;
 
-    @Column(name = "balance", nullable = false)
-    @NotNull
-    private BigDecimal balance;
+    @Column(name = "creation_date", nullable = false)
+    private final LocalDateTime creationDate;
 
-    @Column(name = "account_holder_name", nullable = false)
-    @NotBlank
-    private String accountHolderName;
+    @Column(name = "due_date", nullable = false)
+    private final LocalDateTime dueDate;
 
-    @Column(name = "start_date", nullable = false)
-    @NotNull
-    private LocalDateTime startDate;
-
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
-
-    @Enumerated(EnumType.STRING) // Enum değerlerinin veritabanında string olarak saklanmasını sağlar
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    @NotNull
-    private LoanStatus status;
+    private final LoanStatus status;
 
+    @Column(name = "interest_rate", nullable = false)
+    private final BigDecimal interestRate;
+
+    @Column(name = "remaining_balance", nullable = false)
+    private final BigDecimal remainingBalance;
+
+    // Boş constructor (JPA gereği)
     protected LoanEntity() {
+        this.id = null;
+        this.accountNumber = null;
+        this.loanAmount = null;
+        this.creationDate = null;
+        this.dueDate = null;
+        this.status = null;
+        this.interestRate = null;
+        this.remainingBalance = null;
     }
 
-    public LoanEntity(String loanNumber, BigDecimal amount, BigDecimal balance, String accountHolderName,
-                      LocalDateTime startDate, LocalDateTime endDate, LoanStatus status) {
-        this.loanNumber = loanNumber;
-        this.amount = amount;
-        this.balance = balance;
-        this.accountHolderName = accountHolderName;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    // Parametreli constructor
+    public LoanEntity(Long id, String accountNumber, BigDecimal loanAmount, LocalDateTime creationDate,
+                      LocalDateTime dueDate, LoanStatus status, BigDecimal interestRate,
+                      BigDecimal remainingBalance) {
+        this.id = id;
+        this.accountNumber = accountNumber;
+        this.loanAmount = loanAmount;
+        this.creationDate = creationDate;
+        this.dueDate = dueDate;
         this.status = status;
+        this.interestRate = interestRate;
+        this.remainingBalance = remainingBalance;
     }
 
+    // Getter metodları
     public Long getId() {
         return id;
     }
 
-    public String getLoanNumber() {
-        return loanNumber;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getLoanAmount() {
+        return loanAmount;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
-    public String getAccountHolderName() {
-        return accountHolderName;
-    }
-
-    public LocalDateTime getStartDate() {
-        return startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return endDate;
+    public LocalDateTime getDueDate() {
+        return dueDate;
     }
 
     public LoanStatus getStatus() {
         return status;
     }
 
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public BigDecimal getRemainingBalance() {
+        return remainingBalance;
+    }
+
+    // hashCode metodu
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, accountNumber, loanAmount, creationDate, dueDate, status, interestRate, remainingBalance);
+    }
+
+    // equals metodu
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LoanEntity that = (LoanEntity) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(loanNumber, that.loanNumber) &&
-                Objects.equals(amount, that.amount) &&
-                Objects.equals(balance, that.balance) &&
-                Objects.equals(accountHolderName, that.accountHolderName) &&
-                Objects.equals(startDate, that.startDate) &&
-                Objects.equals(endDate, that.endDate) &&
-                status == that.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, loanNumber, amount, balance, accountHolderName, startDate, endDate, status);
+                Objects.equals(accountNumber, that.accountNumber) &&
+                Objects.equals(loanAmount, that.loanAmount) &&
+                Objects.equals(creationDate, that.creationDate) &&
+                Objects.equals(dueDate, that.dueDate) &&
+                status == that.status &&
+                Objects.equals(interestRate, that.interestRate) &&
+                Objects.equals(remainingBalance, that.remainingBalance);
     }
 
     @Override
     public String toString() {
         return "LoanEntity{" +
                 "id=" + id +
-                ", loanNumber='" + loanNumber + '\'' +
-                ", amount=" + amount +
-                ", balance=" + balance +
-                ", accountHolderName='" + accountHolderName + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", loanAmount=" + loanAmount +
+                ", creationDate=" + creationDate +
+                ", dueDate=" + dueDate +
                 ", status=" + status +
+                ", interestRate=" + interestRate +
+                ", remainingBalance=" + remainingBalance +
                 '}';
     }
 }
+
 
