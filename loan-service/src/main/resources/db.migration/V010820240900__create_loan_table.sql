@@ -1,13 +1,12 @@
-CREATE TYPE loan_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'ACTIVE', 'CLOSED');
 CREATE TABLE loan
 (
-    id                  BIGSERIAL PRIMARY KEY,
-    loan_number         VARCHAR(255)   NOT NULL UNIQUE,
-    amount              DECIMAL(19, 4) NOT NULL,
-    balance             DECIMAL(19, 4) NOT NULL,
-    account_holder_name VARCHAR(255)   NOT NULL,
-    start_date          TIMESTAMP      NOT NULL,
-    end_date            TIMESTAMP,
-    status              loan_status    NOT NULL -- Enum türünü burada kullanıyoruz
+    id                BIGSERIAL PRIMARY KEY,   -- Otomatik olarak artan birincil anahtar
+    account_number    VARCHAR(50)    NOT NULL, -- Hesap numarası
+    loan_amount       DECIMAL(15, 2) NOT NULL, -- Kredi miktarı
+    creation_date     TIMESTAMP      NOT NULL, -- Kredi oluşturulma tarihi
+    due_date          TIMESTAMP      NOT NULL, -- Geri ödeme tarihi
+    status            VARCHAR(50)    NOT NULL, -- Durum, 'P', 'A', 'R' gibi değerlerle depolanabilir (Pending, Approved, Repaid)
+    interest_rate     DECIMAL(5, 2)  NOT NULL, -- Faiz oranı
+    remaining_balance DECIMAL(15, 2) NOT NULL  -- Kalan bakiye
 );
 
