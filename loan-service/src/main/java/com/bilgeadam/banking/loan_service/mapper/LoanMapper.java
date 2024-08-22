@@ -1,7 +1,6 @@
 package com.bilgeadam.banking.loan_service.mapper;
 
 import com.bilgeadam.banking.loan_service.domain.Loan;
-import com.bilgeadam.banking.loan_service.domain.LoanStatus;
 import com.bilgeadam.banking.loan_service.dto.LoanDTO;
 import com.bilgeadam.banking.loan_service.entity.LoanEntity;
 import org.springframework.stereotype.Component;
@@ -55,7 +54,7 @@ public class LoanMapper {
                 loanEntity.getInterestRate()
         )
                 .id(loanEntity.getId())
-                .status(loanEntity.getStatus()) // Enums dönüşümü
+                .status(loanEntity.getStatus())
                 .remainingBalance(loanEntity.getRemainingBalance())
                 .build();
     }
