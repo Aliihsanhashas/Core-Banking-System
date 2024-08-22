@@ -1,4 +1,9 @@
 package com.bilgeadam.banking.loan_service.service;
 
-public class LoanServiceImpl {
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+@Service
+@Transactional
+public class LoanServiceImpl implements LoanService {
 }
