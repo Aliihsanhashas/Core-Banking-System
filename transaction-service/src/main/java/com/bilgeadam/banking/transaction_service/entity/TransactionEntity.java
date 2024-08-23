@@ -1,7 +1,6 @@
 package com.bilgeadam.banking.transaction_service.entity;
 
 import com.bilgeadam.banking.transaction_service.domain.TransactionType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -9,65 +8,102 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "transaction")
+@Table(name = "transactions")
 public class TransactionEntity {
 
-    @Id  // Primary key oldugunu belirtir veritabanında
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // veritabanı için benzersiz bir id değeri atar.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_id", nullable = false)
-    private Long accountId;  // İşlemin ait olduğu hesap kimliği
+    @Column(nullable = false, unique = true)
+    private String transactionNumber;
 
-    @Enumerated(EnumType.STRING) // Değerlerinin veri tabanında string olarak saklanmasını sağlar.
-    @Column(name = "transaction_type", nullable = false)
-    private TransactionType transactionType;  // İşlem türü (DEPOSIT, WITHDRAWAL)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TransactionType transactionType;
 
-    @Column(name = "amount", nullable = false)
-    private BigDecimal amount;  // İşlem miktarı
+    @Column(nullable = false)
+    private BigDecimal amount;
 
-    @Column(name = "transaction_date", nullable = false)
-    private LocalDateTime transactionDate;  // İşlem tarihi
+    @Column(nullable = false)
+    private String fromAccount;
 
-    @Column(name = "description", nullable = false)
+    @Column(nullable = false)
+    private String toAccount;
 
-    private String description;  // İşlem açıklaması
+    @Column(nullable = false)
+    private LocalDateTime transactionDate;
 
-    protected TransactionEntity() {
+    // Constructors, Getters, and Setters
+
+    public TransactionEntity() {
     }
 
-    public TransactionEntity(Long accountId, TransactionType transactionType, BigDecimal amount,
-                             LocalDateTime transactionDate, String description) {
-        this.accountId = accountId;
+    public TransactionEntity(Long id, String transactionNumber, TransactionType transactionType, BigDecimal amount,
+                             String fromAccount, String toAccount, LocalDateTime transactionDate) {
+        this.id = id;
+        this.transactionNumber = transactionNumber;
         this.transactionType = transactionType;
         this.amount = amount;
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
         this.transactionDate = transactionDate;
-        this.description = description;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Long getAccountId() {
-        return accountId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTransactionNumber() {
+        return transactionNumber;
+    }
+
+    public void setTransactionNumber(String transactionNumber) {
+        this.transactionNumber = transactionNumber;
     }
 
     public TransactionType getTransactionType() {
         return transactionType;
     }
 
+    public void setTransactionType(TransactionType transactionType) {
+        this.transactionType = transactionType;
+    }
+
     public BigDecimal getAmount() {
         return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public String getFromAccount() {
+        return fromAccount;
+    }
+
+    public void setFromAccount(String fromAccount) {
+        this.fromAccount = fromAccount;
+    }
+
+    public String getToAccount() {
+        return toAccount;
+    }
+
+    public void setToAccount(String toAccount) {
+        this.toAccount = toAccount;
     }
 
     public LocalDateTime getTransactionDate() {
         return transactionDate;
     }
 
-    public String getDescription() {
-        return description;
+    public void setTransactionDate(LocalDateTime transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     @Override
@@ -75,28 +111,11 @@ public class TransactionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransactionEntity that = (TransactionEntity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(accountId, that.accountId) &&
-                transactionType == that.transactionType &&
-                Objects.equals(amount, that.amount) &&
-                Objects.equals(transactionDate, that.transactionDate) &&
-                Objects.equals(description, that.description);
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, accountId, transactionType, amount, transactionDate, description);
-    }
-
-    @Override
-    public String toString() {
-        return "TransactionEntity{" +
-                "id=" + id +
-                ", accountId=" + accountId +
-                ", transactionType=" + transactionType +
-                ", amount=" + amount +
-                ", transactionDate=" + transactionDate +
-                ", description='" + description + '\'' +
-                '}';
+        return Objects.hash(id);
     }
 }

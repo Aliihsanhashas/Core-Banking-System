@@ -52,6 +52,14 @@ public final class Transaction {
         return transactionDate;
     }
 
+    // Yeni bir withdrawal (para çekme) işlemi oluşturmak için static metod
+    public static Transaction createWithdrawal(String transactionNumber, BigDecimal amount, String fromAccount) {
+        return new TransactionBuilder(0, transactionNumber, TransactionType.WITHDRAWAL, amount)
+                .fromAccount(fromAccount)
+                .transactionDate(LocalDateTime.now())
+                .build();
+    }
+
     public static class TransactionBuilder {
         private final long id;
         private final String transactionNumber;
@@ -74,7 +82,7 @@ public final class Transaction {
         }
 
         public TransactionBuilder toAccount(String toAccount) {
-            this.toAccount = Objects.requireNonNull(toAccount, "To account must not be null");
+            this.toAccount = toAccount; // Bu, para çekme işlemi için opsiyoneldir
             return this;
         }
 

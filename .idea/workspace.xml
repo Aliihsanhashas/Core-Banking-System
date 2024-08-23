@@ -5,20 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a5fa347-3b30-4937-9a07-e133e647ff1d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/controller/LoanController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/domain/Loan.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/domain/LoanType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/dto/LoanDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/entity/LoanEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/repository/LoanRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/loan-service/src/main/java/com/bilgeadam/banking/loan_service/service/LoanService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/controller/TransactionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/dto/TransactionDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/entity/TransactionEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/repository/TransactionRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/service/TransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loan-service/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/loan-service/compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transaction-service/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/transaction-service/compose.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/mapper/TransactionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/domain/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/domain/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/dto/TransactionDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/dto/TransactionDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/entity/TransactionEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/entity/TransactionEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/transaction-service/src/main/java/com/bilgeadam/banking/transaction_service/service/TransactionService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +26,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;bariskilinc6&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Aliihsanhashas/Core-Banking-System.git&quot;,
+    &quot;accountId&quot;: &quot;14c57c10-ce39-45b7-9de2-e76f8190f793&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -48,14 +53,25 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "baris02",
+    "git-widget-placeholder": "feature/setup-project/baris02",
     "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/baris/IdeaProjects/Core-Banking-System/transaction-service",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -64,8 +80,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1723111876835</updated>
+      <workItem from="1724244332434" duration="25000" />
+      <workItem from="1724244364347" duration="6000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="RECENT_FILTERS">
