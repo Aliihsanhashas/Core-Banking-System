@@ -1,105 +1,127 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.2'
-	id 'io.spring.dependency-management' version '1.1.6'
-	id 'org.flywaydb.flyway' version '9.1.1'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'org.flywaydb.flyway' version '9.1.1'
+    id 'com.google.protobuf' version '0.9.2' // Protobuf plugin'i
 }
 
 group = 'com.bilgeadam.banking'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.flywaydb:flyway-core:9.1.1'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	runtimeOnly 'org.postgresql:postgresql'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation platform('org.testcontainers:testcontainers-bom:1.20.1') //import bom
-	testImplementation('org.testcontainers:postgresql') //no version specified
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.flywaydb:flyway-core:9.1.1'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+    implementation 'net.devh:grpc-spring-boot-starter:2.14.0.RELEASE' // gRPC Spring Boot Starter
+    implementation 'io.grpc:grpc-netty-shaded:1.57.2'
+    implementation 'io.grpc:grpc-protobuf:1.57.2'
+    implementation 'io.grpc:grpc-stub:1.57.2'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation platform('org.testcontainers:testcontainers-bom:1.20.1') //import bom
+    testImplementation('org.testcontainers:postgresql') //no version specified
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.22.3"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.57.2"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+
 tasks.named('test') {
-	useJUnitPlatform()
-	finalizedBy stopDockerCompose
+    useJUnitPlatform()
+    finalizedBy stopDockerCompose
 }
 
 // Add the Gradle Wrapper configuration
 tasks.named('wrapper') {
-	gradleVersion = '7.5'
-	distributionType = Wrapper.DistributionType.ALL
+    gradleVersion = '7.5'
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 task startPostgres(type: Exec) {
-	commandLine 'docker', 'compose', '-f', 'compose-test.yaml', 'up', '-d'
+    commandLine 'docker', 'compose', '-f', 'compose-test.yaml', 'up', '-d'
 }
 
 task waitForPostgres(type: Exec) {
-	dependsOn startPostgres
-	commandLine 'sh', '-c', 'until docker exec postgres-container pg_isready -U test; do sleep 1; done'
+    dependsOn startPostgres
+    commandLine 'sh', '-c', 'until docker exec postgres-container pg_isready -U test; do sleep 1; done'
 }
 
 flyway {
-	url = 'jdbc:postgresql://localhost:5432/account'
-	user = 'test'
-	password = 'test'
-	locations = ['classpath:db/migration']
+    url = 'jdbc:postgresql://localhost:5432/account'
+    user = 'test'
+    password = 'test'
+    locations = ['classpath:db/migration']
 }
 
 // Flyway task with retry logic
 task retryFlywayMigrate {
-	dependsOn waitForPostgres
-	doLast {
-		def maxRetries = 5
-		def delay = 1 // seconds
-		def attempt = 1
+    dependsOn waitForPostgres
+    doLast {
+        def maxRetries = 5
+        def delay = 1 // seconds
+        def attempt = 1
 
-		while (attempt <= maxRetries) {
-			try {
-				println "Attempt $attempt to run Flyway migration..."
-				tasks.named('flywayMigrate').get().actions.each { action ->
-					action.execute(tasks.named('flywayMigrate').get())
-				}
-				println "Flyway migration succeeded on attempt $attempt"
-				break
-			} catch (Exception e) {
-				if (attempt == maxRetries) {
-					println "Flyway migration failed after $attempt attempts"
-					throw e
-				}
-				println "Flyway migration failed on attempt $attempt. Retrying in $delay seconds..."
-				sleep(delay * 1000) // Delay in milliseconds
-				attempt++
-			}
-		}
-	}
+        while (attempt <= maxRetries) {
+            try {
+                println "Attempt $attempt to run Flyway migration..."
+                tasks.named('flywayMigrate').get().actions.each { action ->
+                    action.execute(tasks.named('flywayMigrate').get())
+                }
+                println "Flyway migration succeeded on attempt $attempt"
+                break
+            } catch (Exception e) {
+                if (attempt == maxRetries) {
+                    println "Flyway migration failed after $attempt attempts"
+                    throw e
+                }
+                println "Flyway migration failed on attempt $attempt. Retrying in $delay seconds..."
+                sleep(delay * 1000) // Delay in milliseconds
+                attempt++
+            }
+        }
+    }
 }
 
 // Ensure flywayMigrate task is not directly run since we use retryable one
 tasks.named('flywayMigrate') {
-	enabled = false
+    enabled = false
 }
 
 task stopDockerCompose(type: Exec) {
-	dependsOn test
-	commandLine 'docker', 'compose', '-f', 'compose-test.yaml', 'down'
+    dependsOn test
+    commandLine 'docker', 'compose', '-f', 'compose-test.yaml', 'down'
 }
 
 test {
-	dependsOn retryFlywayMigrate
+    dependsOn retryFlywayMigrate
 }
