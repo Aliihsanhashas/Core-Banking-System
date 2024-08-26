@@ -15,27 +15,5 @@ import java.math.BigDecimal;
 
 @GrpcService
 public class AccountGrpcServiceImpl extends AccountServiceGrpc.AccountServiceImplBase {
-    private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
-
-    public AccountGrpcServiceImpl(AccountRepository accountRepository, AccountMapper accountMapper) {
-        this.accountRepository = accountRepository;
-        this.accountMapper = accountMapper;
-    }
-
-    @Override
-    public void getBalance(GetBalanceRequest request, StreamObserver<GetBalanceResponse> responseObserver) {
-        AccountEntity accountEntity = accountRepository.findByAccountNumber(request.getAccountNumber())
-                .orElseThrow(() -> new AccountNotFoundException("Account with number " + request.getAccountNumber() + " not found"));
-        Account account = accountMapper.toDomain(accountEntity);
-        BigDecimal balance = account.getBalance();
-
-        GetBalanceResponse response = GetBalanceResponse.newBuilder()
-                .setBalance(balance.toString())
-                .build();
-
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
-    }
 
 }
