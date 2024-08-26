@@ -2,3 +2,15 @@ syntax = "proto3";
 option java_multiple_files = true;
 package com.bilgeadam.banking;
 
+service LoanService {
+  rpc UpdateBalance(UpdateBalanceRequest) returns (UpdateBalanceResponse);
+}
+
+message UpdateBalanceRequest {
+  string accountNumber = 1;
+  string balance = 2;
+}
+
+message UpdateBalanceResponse {
+  bool success = 1;
+}
