@@ -15,5 +15,23 @@ import java.math.BigDecimal;
 
 @GrpcService
 public class AccountGrpcServiceImpl extends AccountServiceGrpc.AccountServiceImplBase {
+    private final AccountServiceImpl accountService;
 
+    public AccountGrpcServiceImpl(AccountServiceImpl accountService) {
+        this.accountService = accountService;
+    }
+
+    @Override
+    public void getBalance(GetBalanceRequest request, StreamObserver<GetBalanceResponse> responseObserver) {
+        //requestden accountNumber'i aldık
+        String accountNumber = request.getAccountNumber();
+        //DB de accountNumber'e ait balance değerini getirttik.
+        BigDecimal balance = accountService.getBalance(accountNumber);
+        //yolladığımız kısım.
+        GetBalanceResponse response = GetBalanceResponse.newBuilder()
+                .setBalance(balance.toString())
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
 }
