@@ -5,8 +5,6 @@ import com.bilgeadam.banking.AccountServiceGrpc;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
-import java.math.BigDecimal;
-
 @GrpcService
 public class AccountGrpcServiceImpl extends AccountServiceGrpc.AccountServiceImplBase {
 
