@@ -74,11 +74,11 @@ task startPostgres(type: Exec) {
 
 task waitForPostgres(type: Exec) {
 	dependsOn startPostgres
-	commandLine 'sh', '-c', 'until docker exec postgres-container pg_isready -U test; do sleep 1; done'
+	commandLine 'sh', '-c', 'until docker exec postgres-container-loan pg_isready -U test; do sleep 1; done'
 }
 
 flyway {
-	url = 'jdbc:postgresql://localhost:5432/loan'
+	url = 'jdbc:postgresql://localhost:5434/loan'
 	user = 'test'
 	password = 'test'
 	locations = ['classpath:db/migration']
