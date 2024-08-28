@@ -9,4 +9,3 @@ CREATE TABLE loan
     interest_rate     DECIMAL(5, 2)  NOT NULL, -- Faiz oranı
     remaining_balance DECIMAL(15, 2) NOT NULL  -- Kalan bakiye
 );
-
