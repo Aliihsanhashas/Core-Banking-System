@@ -50,7 +50,7 @@ task startPostgres(type: Exec) {
 
 task waitForPostgres(type: Exec) {
 	dependsOn startPostgres
-	commandLine 'sh', '-c', 'until docker exec postgres-container pg_isready -U test; do sleep 1; done'
+	commandLine 'sh', '-c', 'until docker exec postgres-container-transaction pg_isready -U test; do sleep 1; done'
 }
 
 flyway {

@@ -55,26 +55,4 @@ public final class TransactionDTO {
         return transactionDate;
     }
 
-    // Transaction domain nesnesinden TransactionDTO oluşturma
-    public static TransactionDTO fromDomain(Transaction transaction) {
-        return new TransactionDTO(
-                transaction.getId(),
-                transaction.getTransactionNumber(),
-                transaction.getTransactionType(),
-                transaction.getAmount(),
-                transaction.getFromAccount(),
-                transaction.getToAccount(),
-                transaction.getTransactionDate()
-        );
-    }
-
-    // TransactionDTO'dan Transaction domain nesnesi oluşturma
-    public Transaction toDomain() {
-        return new Transaction.TransactionBuilder(id, transactionNumber, transactionType, amount)
-                .fromAccount(fromAccount)
-                .toAccount(toAccount)
-                .transactionDate(transactionDate)
-                .build();
-    }
-
 }

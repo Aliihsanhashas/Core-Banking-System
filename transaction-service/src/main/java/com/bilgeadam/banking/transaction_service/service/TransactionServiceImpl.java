@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,21 +20,30 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
-    private final TransactionNumberGeneratorService transactionNumberGeneratorService;
 
     @Autowired
     public TransactionServiceImpl(TransactionRepository transactionRepository, TransactionMapper transactionMapper, TransactionNumberGeneratorService transactionNumberGeneratorService) {
         this.transactionRepository = transactionRepository;
         this.transactionMapper = transactionMapper;
-        this.transactionNumberGeneratorService = transactionNumberGeneratorService;
+
     }
 
     @Override
     public List<TransactionDTO> getAllTransactions() {
+        // Veritabanından tüm TransactionEntity nesnelerini al
         List<TransactionEntity> transactionEntities = transactionRepository.findAll();
-        return transactionEntities.stream()
-                .map(transactionMapper::toDTO)
+
+        // TransactionEntity nesnelerini Transaction domain nesnelerine dönüştür
+        List<Transaction> transactions = transactionEntities.stream()
+                .map(transactionMapper::toDomain) // TransactionEntity'den Transaction domain'e dönüşüm
                 .collect(Collectors.toList());
+
+        // Transaction domain nesnelerini TransactionDTO'lara dönüştür
+        List<TransactionDTO> transactionDTOs = transactions.stream()
+                .map(transactionMapper::toDTO) // Transaction domain'den TransactionDTO'ya dönüşüm
+                .collect(Collectors.toList());
+
+        return transactionDTOs;
     }
 
     @Override
@@ -49,11 +57,13 @@ public class TransactionServiceImpl implements TransactionService {
     public TransactionDTO processWithdrawal(String accountNumber, BigDecimal amount) {
         // Withdrawal logic goes here
         // Similar to your AccountServiceImpl methods
+        return null;
     }
 
     @Override
     public TransactionDTO processDeposit(String accountNumber, BigDecimal amount) {
         // Deposit logic goes here
         // Similar to your AccountServiceImpl methods
+        return null;
     }
 }

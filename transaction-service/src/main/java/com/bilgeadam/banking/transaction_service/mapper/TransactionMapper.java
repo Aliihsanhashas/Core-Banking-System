@@ -5,9 +5,6 @@ import com.bilgeadam.banking.transaction_service.dto.TransactionDTO;
 import com.bilgeadam.banking.transaction_service.entity.TransactionEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Component
 public class TransactionMapper {
 
@@ -28,29 +25,52 @@ public class TransactionMapper {
                 .build();
     }
 
-    // TransactionEntity'yi TransactionDTO'ya dönüştür
-    public TransactionDTO toDTO(TransactionEntity transactionEntity) {
-        if (transactionEntity == null) {
+    // Transaction domain nesnesini TransactionDTO'ya dönüştür
+    public TransactionDTO toDTO(Transaction transaction) {
+        if (transaction == null) {
             return null;
         }
         return new TransactionDTO(
-                transactionEntity.getId(),
-                transactionEntity.getTransactionNumber(),
-                transactionEntity.getTransactionType(),
-                transactionEntity.getAmount(),
-                transactionEntity.getFromAccount(),
-                transactionEntity.getToAccount(),
-                transactionEntity.getTransactionDate()
+                transaction.getId(),
+                transaction.getTransactionNumber(),
+                transaction.getTransactionType(),
+                transaction.getAmount(),
+                transaction.getFromAccount(),
+                transaction.getToAccount(),
+                transaction.getTransactionDate()
         );
     }
 
-    // List<TransactionEntity> listesini List<TransactionDTO> listesine dönüştür
-    public List<TransactionDTO> toDTOList(List<TransactionEntity> entities) {
-        if (entities == null) {
+    // TransactionEntity'yi Transaction domain nesnesine dönüştür
+    public Transaction toDomain(TransactionEntity transactionEntity) {
+        if (transactionEntity == null) {
             return null;
         }
-        return entities.stream()
-                .map(this::toDTO) // Bu, TransactionEntity'den TransactionDTO'ya dönüşümü sağlar
-                .collect(Collectors.toList());
+        return new Transaction.TransactionBuilder(
+                transactionEntity.getId(),
+                transactionEntity.getTransactionNumber(),
+                transactionEntity.getTransactionType(),
+                transactionEntity.getAmount()
+        )
+                .fromAccount(transactionEntity.getFromAccount())
+                .toAccount(transactionEntity.getToAccount())
+                .transactionDate(transactionEntity.getTransactionDate())
+                .build();
+    }
+
+    // Transaction domain nesnesini TransactionEntity'ye dönüştür
+    public TransactionEntity toEntity(Transaction transaction) {
+        if (transaction == null) {
+            return null;
+        }
+        return new TransactionEntity(
+                transaction.getId(),
+                transaction.getTransactionNumber(),
+                transaction.getTransactionType(),
+                transaction.getAmount(),
+                transaction.getFromAccount(),
+                transaction.getToAccount(),
+                transaction.getTransactionDate()
+        );
     }
 }
