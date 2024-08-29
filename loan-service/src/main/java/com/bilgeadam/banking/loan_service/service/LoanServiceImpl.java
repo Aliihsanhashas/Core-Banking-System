@@ -23,20 +23,6 @@ public class LoanServiceImpl implements LoanService {
 
 
     @Override
-    public LoanDTO applyForLoan(LoanDTO loanDTO) {
-        // LoanDTO'yu Loan domain nesnesine dönüştür
-        Loan loan = loanMapper.toDomain(loanDTO);
-        // Loan nesnesini Entity nesnesine dönüştür
-        LoanEntity loanEntity = loanMapper.toEntity(loan);
-        // Entity nesnesini veritabanına kaydet
-        LoanEntity savedLoanEntity = loanRepository.save(loanEntity);
-        // Kaydedilen Entity nesnesini Domain nesnesine dönüştür
-        Loan savedLoan = loanMapper.toDomain(savedLoanEntity);
-        // Domain nesnesini DTO'ya dönüştür ve geri döndür
-        return loanMapper.toDTO(savedLoan);
-    }
-
-    @Override
     public LoanDTO getLoanStatus(Long loanId) {
         LoanEntity loanEntity = loanRepository.findById(loanId)
                 .orElseThrow(() -> new IllegalArgumentException("Loan not found with id: " + loanId));

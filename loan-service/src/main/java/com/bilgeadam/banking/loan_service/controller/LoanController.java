@@ -25,16 +25,4 @@ public class LoanController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-
-    @PostMapping("/apply")
-    public ResponseEntity<LoanDTO> applyForLoan(@RequestBody LoanDTO loanDTO) {
-        try {
-            LoanDTO createdLoanDTO = loanServiceImpl.applyForLoan(loanDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdLoanDTO);
-        } catch (Exception ex) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
-        }
-    }
 }
