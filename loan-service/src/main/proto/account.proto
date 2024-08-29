@@ -1,0 +1,15 @@
+syntax = "proto3";
+package com.bilgeadam.banking;
+
+
+service AccountService {
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse);
+}
+
+message GetBalanceRequest {
+  string accountNumber = 1;
+}
+
+message GetBalanceResponse {
+  string balance = 1;
+}

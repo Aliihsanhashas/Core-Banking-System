@@ -21,10 +21,10 @@ public class AccountGrpcServiceImpl extends AccountServiceGrpc.AccountServiceImp
         //requestden accountNumber'i aldık
         String accountNumber = request.getAccountNumber();
         //DB de accountNumber'e ait balance değerini getirttik.
-        BigDecimal balance = accountService.getBalance(accountNumber);
+        //BigDecimal balance = accountService.getBalance(accountNumber);
         //yolladığımız kısım.
         Account.GetBalanceResponse response = Account.GetBalanceResponse.newBuilder()
-                .setBalance(balance.toString())
+                .setBalance("balance.toString()")
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
