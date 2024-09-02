@@ -1,19 +1,22 @@
 package com.bilgeadam.banking.account_service.service;
 
-import com.bilgeadam.banking.account_service.domain.Account;
-import com.bilgeadam.banking.account_service.repository.AccountRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.bilgeadam.banking.account_service.dto.AccountDTO;
 
-@Service
-public class AccountService {
-    private final AccountRepository accountRepository;
+import java.math.BigDecimal;
+import java.util.List;
 
-    @Autowired
-    public AccountService(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
+public interface AccountService {
 
+    List<AccountDTO> getAllAccounts();
 
+    AccountDTO getAccountByNumber(String accountNumber);
+
+    AccountDTO createAccount(AccountDTO accountDTO);
+
+    AccountDTO updateAccount(String accountNumber, AccountDTO accountDTO);
+
+    AccountDTO closeAccount(String accountNumber);
+
+    BigDecimal getBalance(String accountNumber);
 
 }

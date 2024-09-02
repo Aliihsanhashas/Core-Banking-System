@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres
+    container_name: postgres-container-loan
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    ports:
+      - "5434:5432"
+  initdb:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=test
+      - PGPASSWORD=test
+    command: >
+      sh -c "
+        echo 'Waiting for PostgreSQL to be ready...';
+        until psql -h db -U test -d postgres -c 'SELECT 1;' >/dev/null 2>&1; do
+          echo 'PostgreSQL is not ready yet. Waiting...';
+          sleep 2;
+        done;
+        echo 'PostgreSQL is ready. Attempting to create the database...';
+        psql -h db -U test -d postgres -c 'CREATE DATABASE loan;' || true;
+        if psql -h db -U test -d loan -c 'SELECT 1;' >/dev/null 2>&1; then
+          echo 'Database creation or verification successful.';
+          exit 0;
+        else
+          echo 'Database creation failed.';
+          exit 1;
+        fi
+      "
+    depends_on:
+      - db
+    restart: on-failure

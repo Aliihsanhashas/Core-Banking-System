@@ -6,73 +6,89 @@ import java.util.Objects;
 
 public final class Transaction {
 
-    private final String transactionId;
-
-    private final String sourceAccountNumber;
-
-    private final String destinationAccountNumber;
-
-    private final BigDecimal amount;
-
-    private final LocalDateTime timestamp;
-
+    private final long id;
+    private final String transactionNumber;
     private final TransactionType transactionType;
+    private final BigDecimal amount;
+    private final String fromAccount;
+    private final String toAccount;
+    private final LocalDateTime transactionDate;
 
-
-
-    // Builder kullanılarak Transaction nesnesinin oluşturulması
     private Transaction(TransactionBuilder builder) {
-        this.transactionId = builder.transactionId;
-        this.sourceAccountNumber = builder.sourceAccountNumber;
-        this.destinationAccountNumber = builder.destinationAccountNumber;
-        this.amount = builder.amount;
-        this.timestamp = builder.timestamp;
+        this.id = builder.id;
+        this.transactionNumber = builder.transactionNumber;
         this.transactionType = builder.transactionType;
+        this.amount = builder.amount;
+        this.fromAccount = builder.fromAccount;
+        this.toAccount = builder.toAccount;
+        this.transactionDate = builder.transactionDate;
     }
 
-    public String getTransactionId() {
-        return transactionId;
+    public long getId() {
+        return id;
     }
 
-    public String getSourceAccountNumber() {
-        return sourceAccountNumber;
-    }
-
-    public String getDestinationAccountNumber() {
-        return destinationAccountNumber;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public String getTransactionNumber() {
+        return transactionNumber;
     }
 
     public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    // Transaction nesnesini oluşturmak için Builder sınıfı
-    public static class TransactionBuilder {
-        // Builder sınıfında kullanılacak tüm özellikler
-        private final String transactionId;
-        private final String sourceAccountNumber;
-        private final String destinationAccountNumber;
-        private final BigDecimal amount;
-        private final LocalDateTime timestamp;
-        private final TransactionType transactionType;
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-        // Builder'ın gerekli tüm parametrelerle başlatılması
-        public TransactionBuilder(String transactionId, String sourceAccountNumber, String destinationAccountNumber,
-                                  BigDecimal amount, LocalDateTime timestamp, TransactionType transactionType) {
-            this.transactionId = Objects.requireNonNull(transactionId, "Transaction ID must not be null");
-            this.sourceAccountNumber = Objects.requireNonNull(sourceAccountNumber, "Source account number must not be null");
-            this.destinationAccountNumber = Objects.requireNonNull(destinationAccountNumber, "Destination account number must not be null");
-            this.amount = Objects.requireNonNull(amount, "Amount must not be null");
-            this.timestamp = Objects.requireNonNull(timestamp, "Timestamp must not be null");
+    public String getFromAccount() {
+        return fromAccount;
+    }
+
+    public String getToAccount() {
+        return toAccount;
+    }
+
+    public LocalDateTime getTransactionDate() {
+        return transactionDate;
+    }
+
+    // Yeni bir withdrawal (para çekme) işlemi oluşturmak için static metod
+    public static Transaction createWithdrawal(String transactionNumber, BigDecimal amount, String fromAccount) {
+        return new TransactionBuilder(0, transactionNumber, TransactionType.WITHDRAWAL, amount)
+                .fromAccount(fromAccount)
+                .transactionDate(LocalDateTime.now())
+                .build();
+    }
+
+    public static class TransactionBuilder {
+        private final long id;
+        private final String transactionNumber;
+        private final TransactionType transactionType;
+        private final BigDecimal amount;
+        private String fromAccount;
+        private String toAccount;
+        private LocalDateTime transactionDate = LocalDateTime.now();
+
+        public TransactionBuilder(long id, String transactionNumber, TransactionType transactionType, BigDecimal amount) {
+            this.id = id;
+            this.transactionNumber = Objects.requireNonNull(transactionNumber, "Transaction number must not be null");
             this.transactionType = Objects.requireNonNull(transactionType, "Transaction type must not be null");
+            this.amount = Objects.requireNonNull(amount, "Amount must not be null");
+        }
+
+        public TransactionBuilder fromAccount(String fromAccount) {
+            this.fromAccount = Objects.requireNonNull(fromAccount, "From account must not be null");
+            return this;
+        }
+
+        public TransactionBuilder toAccount(String toAccount) {
+            this.toAccount = toAccount; // Bu, para çekme işlemi için opsiyoneldir
+            return this;
+        }
+
+        public TransactionBuilder transactionDate(LocalDateTime transactionDate) {
+            this.transactionDate = Objects.requireNonNull(transactionDate, "Transaction date must not be null");
+            return this;
         }
 
         public Transaction build() {

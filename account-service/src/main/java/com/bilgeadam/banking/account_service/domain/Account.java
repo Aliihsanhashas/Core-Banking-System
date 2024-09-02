@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public final class Account {
 
-    private long id;
+    private final Long id;  // ID alanı final ancak, veritabanı tarafından atanacak
     private final String accountNumber;
     private final AccountType accountType;
     private final BigDecimal balance;
@@ -14,7 +14,7 @@ public final class Account {
     private final boolean isClosed;
 
     private Account(AccountBuilder builder) {
-        this.id = builder.id;
+        this.id = builder.id; // ID alanını veritabanından okunacak şekilde koruyoruz
         this.accountNumber = builder.accountNumber;
         this.accountType = builder.accountType;
         this.balance = builder.balance;
@@ -23,7 +23,7 @@ public final class Account {
         this.isClosed = builder.isClosed;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -51,11 +51,9 @@ public final class Account {
         return isClosed;
     }
 
-    // static class olmasının sebebi account dan bağımsız çalışabilsin.
-    //AccountBuilder sınıfının sadece Account nesnesi oluşturmak tasarlanıp
-    //dış sınıfın iç yapısına erişim sağlamadan,etkilemeden çalışmasını sağlar.
     public static class AccountBuilder {
-        private final long id;
+
+        private Long id; // ID alanı isteğe bağlı olarak ayarlanabilir, ancak veritabanı tarafından atanır
         private final String accountNumber;
         private final AccountType accountType;
         private BigDecimal balance = BigDecimal.ZERO;
@@ -63,21 +61,21 @@ public final class Account {
         private final String accountHolderContact;
         private boolean isClosed = false;   //default value.
 
-        public AccountBuilder(long id, String accountNumber, AccountType accountType, String accountHolderName,
+        public AccountBuilder(String accountNumber, AccountType accountType, String accountHolderName,
                               String accountHolderContact) {
-            this.id = id;
             this.accountNumber = Objects.requireNonNull(accountNumber, "Account number must not be null");
             this.accountType = Objects.requireNonNull(accountType, "Account type must not be null");
             this.accountHolderName = Objects.requireNonNull(accountHolderName, "Account holder name must not be null");
             this.accountHolderContact = Objects.requireNonNull(accountHolderContact, "Account holder contact must not be null");
-
         }
 
-        //Account'un bakiye bilgisini temsil eder. balance değerini ayarlar.Ve kontrol eder.
+        // ID'yi ayarlamaya gerek kalmadan veritabanından okuma imkanı tanır.
+        public AccountBuilder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
         public AccountBuilder balance(BigDecimal balance) {
-            if (balance.compareTo(BigDecimal.ZERO) < 0) {
-                throw new IllegalArgumentException("Balance cannot be negative");
-            }
             this.balance = balance;
             return this;
         }

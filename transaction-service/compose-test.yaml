@@ -1,0 +1,54 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/transaction
+      - SPRING_DATASOURCE_USERNAME=test
+      - SPRING_DATASOURCE_PASSWORD=test
+      - SPRING_FLYWAY_URL=jdbc:postgresql://db:5432/transaction
+      - SPRING_FLYWAY_USER=test
+      - SPRING_FLYWAY_PASSWORD=test
+    depends_on:
+      - db
+      - initdb
+    restart: on-failure
+
+  db:
+    image: postgres
+    container_name: postgres-containerTransaction
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+    ports:
+      - "5433:5432"
+
+  initdb:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=test
+      - PGPASSWORD=test
+    command: >
+      sh -c "
+        echo 'Waiting for PostgreSQL to be ready...';
+        until psql -h db -U test -d postgres -c 'SELECT 1;' >/dev/null 2>&1; do
+          echo 'PostgreSQL is not ready yet. Waiting...';
+          sleep 2;
+        done;
+        echo 'PostgreSQL is ready. Attempting to create the database...';
+        psql -h db -U test -d postgres -c 'CREATE DATABASE transaction;' || true;
+        if psql -h db -U test -d transaction -c 'SELECT 1;' >/dev/null 2>&1; then
+          echo 'Database creation or verification successful.';
+          exit 0;
+        else
+          echo 'Database creation failed.';
+          exit 1;
+        fi
+      "
+    depends_on:
+      - db
+    restart: on-failure

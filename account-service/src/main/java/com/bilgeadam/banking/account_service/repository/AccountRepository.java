@@ -16,14 +16,7 @@ public interface AccountRepository extends JpaRepository<AccountEntity, Long> {
     // Hesap numarasına göre AccountEntity'yi bulur
     Optional<AccountEntity> findByAccountNumber(String accountNumber);
 
-    // Hesap numarasına sahip olan AccountEntity'yi kontrol eder
-    boolean existsByAccountNumber(String accountNumber);
 
-    // Hesapları kapalı olanları bulmak için bir metod (zorunlu değil)
-    List<AccountEntity> findByIsClosed(boolean isClosed);
-
-    // Hesap numarasına göre bakiye (balance) sorgulamak için metod
-    BigDecimal findBalanceByAccountNumber(String accountNumber);
 
 
 
