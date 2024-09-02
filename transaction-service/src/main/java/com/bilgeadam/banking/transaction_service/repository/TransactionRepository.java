@@ -11,9 +11,4 @@ import java.util.Optional;
 @Repository
 public interface TransactionRepository extends JpaRepository<TransactionEntity, Long> {
 
-    // Find a transaction by its ID
-    Optional<TransactionEntity> findByTransactionId(Long transactionId);
-
-    // Find all transactions by an associated account ID
-    List<TransactionEntity> findByAccountId(Long accountId);
 }

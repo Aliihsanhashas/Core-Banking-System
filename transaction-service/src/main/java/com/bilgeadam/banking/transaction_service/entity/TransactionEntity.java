@@ -54,56 +54,34 @@ public class TransactionEntity {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getTransactionNumber() {
         return transactionNumber;
     }
 
-    public void setTransactionNumber(String transactionNumber) {
-        this.transactionNumber = transactionNumber;
-    }
 
     public TransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
 
     public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
 
     public String getFromAccount() {
         return fromAccount;
     }
 
-    public void setFromAccount(String fromAccount) {
-        this.fromAccount = fromAccount;
-    }
 
     public String getToAccount() {
         return toAccount;
     }
 
-    public void setToAccount(String toAccount) {
-        this.toAccount = toAccount;
-    }
 
     public LocalDateTime getTransactionDate() {
         return transactionDate;
-    }
-
-    public void setTransactionDate(LocalDateTime transactionDate) {
-        this.transactionDate = transactionDate;
     }
 
     @Override
@@ -111,11 +89,30 @@ public class TransactionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransactionEntity that = (TransactionEntity) o;
-        return id.equals(that.id);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(transactionNumber, that.transactionNumber) &&
+                transactionType == that.transactionType &&
+                Objects.equals(amount, that.amount) &&
+                Objects.equals(fromAccount, that.fromAccount) &&
+                Objects.equals(toAccount, that.toAccount) &&
+                Objects.equals(transactionDate, that.transactionDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, transactionNumber, transactionType, amount, fromAccount, toAccount, transactionDate);
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionEntity{" +
+                "id=" + id +
+                ", transactionNumber='" + transactionNumber + '\'' +
+                ", transactionType=" + transactionType +
+                ", amount=" + amount +
+                ", fromAccount='" + fromAccount + '\'' +
+                ", toAccount='" + toAccount + '\'' +
+                ", transactionDate=" + transactionDate +
+                '}';
     }
 }

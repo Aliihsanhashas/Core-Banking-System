@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 @RequestMapping(path = "/api/loan")
 public class LoanController {
@@ -32,4 +34,18 @@ public class LoanController {
     public String getBalance(@RequestParam String accountNumber) {
         return accountServiceClient.getBalance(accountNumber);
     }
+
+
+    @PostMapping("/{loanId}/repayments")
+    public ResponseEntity<LoanDTO> makeRepayment(
+            @PathVariable Long loanId,
+            @RequestParam BigDecimal repaymentAmount) {
+        try {
+            LoanDTO updatedLoan = loanServiceImpl.makeRepayment(loanId, repaymentAmount);
+            return ResponseEntity.ok(updatedLoan);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
 }

@@ -9,6 +9,9 @@ import com.bilgeadam.banking.loan_service.repository.LoanRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 @Service
 @Transactional
 public class LoanServiceImpl implements LoanService {
@@ -30,5 +33,39 @@ public class LoanServiceImpl implements LoanService {
         Loan loan = loanMapper.toDomain(loanEntity);
         LoanDTO loanDTO = loanMapper.toDTO(loan);
         return loanDTO;
+    }
+
+    @Override
+    public LoanDTO makeRepayment(Long loanId, BigDecimal repaymentAmount) {
+        Optional<LoanEntity> optionalLoanEntity = loanRepository.findById(loanId);
+
+        if (!optionalLoanEntity.isPresent()) {
+            throw new RuntimeException("Loan not found");
+        }
+
+        LoanEntity loanEntity = optionalLoanEntity.get();
+
+        Loan loan = loanMapper.toDomain(loanEntity);
+
+        BigDecimal newRemainingBalance = loan.getRemainingBalance().subtract(repaymentAmount);
+        Loan updatedLoan = new Loan.LoanBuilder(
+                loan.getAccountNumber(),
+                loan.getLoanAmount(),
+                loan.getCreationDate(),
+                loan.getDueDate(),
+                loan.getInterestRate()
+        )
+                .status(loan.getStatus())
+                .remainingBalance(newRemainingBalance)
+                .build();
+
+        // Güncellenmiş kredi nesnesini tekrar entity'ye dönüştür
+        LoanEntity updatedLoanEntity = loanMapper.toEntity(updatedLoan);
+
+        // Güncellenmiş kredi nesnesini veri tabanına kaydet
+        loanRepository.save(updatedLoanEntity);
+
+        // DTO olarak geri döndür
+        return loanMapper.toDTO(updatedLoan);
     }
 }

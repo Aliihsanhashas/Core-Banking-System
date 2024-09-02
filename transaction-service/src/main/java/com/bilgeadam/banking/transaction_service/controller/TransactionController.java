@@ -19,13 +19,6 @@ public class TransactionController {
         this.transactionServiceImplt = transactionServiceImplt;
     }
 
-   /* @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<TransactionDTO>> getTransactionsByAccountId(@PathVariable Long accountId) {
-        List<TransactionDTO> transactions = transactionServiceImplt.getTransactionById(accountId);
-        return ResponseEntity.ok(transactions);
-    }
-    */
-
     @GetMapping("/{id}")
     public ResponseEntity<TransactionDTO> getTransactionById(@PathVariable Long id) {
         TransactionDTO transaction = transactionServiceImplt.getTransactionById(id);

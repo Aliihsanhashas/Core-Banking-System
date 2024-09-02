@@ -53,23 +53,4 @@ public final class AccountDTO {
         return isClosed;
     }
 
-    // Bu metod, bir Account domain nesnesini AccountDTO nesnesine dönüştürmek için kullanılır.
-    public static AccountDTO fromDomain(Account account) {
-        return new AccountDTO(
-                account.getAccountNumber(),
-                account.getAccountType(),
-                account.getBalance(),
-                account.getAccountHolderName(),
-                account.getAccountHolderContact(),
-                account.isClosed()
-        );
-    }
-
-    // Bu metod, bir AccountDTO nesnesini Account domain nesnesine dönüştürmek için kullanılır.
-    public Account toDomain() {
-        return new Account.AccountBuilder(accountNumber, accountType, accountHolderName, accountHolderContact)
-                .balance(balance)
-                .isClosed(isClosed)
-                .build();
-    }
 }

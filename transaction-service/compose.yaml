@@ -18,13 +18,13 @@ services:
 
   db:
     image: postgres
-    container_name: postgres-containerTransaction
+    container_name: postgres-container-transaction
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=test
       - POSTGRES_PASSWORD=test
     ports:
-      - "5432:5432"
+      - "5433:5432"
 
   initdb:
     image: postgres
